@@ -113,7 +113,8 @@ const initialState = {
         viable: true,
         identical: true,
         sameGroup: true,
-        parentGroupCount: 0
+        parentGroupCount: 0,
+        active: false
     }
 }
 

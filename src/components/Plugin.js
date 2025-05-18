@@ -19,12 +19,15 @@ import { Theme } from '@swc-react/theme';
 import { ButtonGroup } from '@swc-react/button-group';
 
 //React
-import React, { useState, useEffect, useRef, useReducer, Fragment } from "react";
+import React, { useState, useEffect, useRef, useContext, Fragment } from "react";
 
 //Local
+import { PluginContext } from '../contexts/PluginContext.js';
+import { SelectionProvider } from '../contexts/SelectionContext.js';
 import Nav from './Nav.js';
 import Editor from "./Editor.js";
 import Builder from "./Builder.js";
+import Production from "./Production.js";
 import BulkActionBar from "./BulkActionBar.js";
 import { getCreativeConfig } from "../constants/creativeConfigs.js";
 import { pluginReducer } from '../reducers/pluginReducer.js';
@@ -34,8 +37,7 @@ import { logInitData, addDebugListeners } from '../utilities/utilities.js';
 //Photoshop Stuff
 const { versions, host, storage } = require('uxp');
 const { arch, platform } = require('os');
-const { app, action, constants, core } = require("photoshop");
-const { LayerKind } = constants;
+const { app } = require("photoshop");
 const eventDebug = false;
 
 function getManifestOnLoad(dispatch) {
@@ -87,7 +89,8 @@ function getManifestOnLoad(dispatch) {
 }
 
 function Plugin() {
-    const [state, dispatch] = useReducer(pluginReducer, initialState);
+    const { state, dispatch } = useContext(PluginContext);
+    // const [state, dispatch] = useReducer(pluginReducer, initialState);
     const [creativeState, setCreativeState] = useState(() => getCreativeConfig('velocity'));
     const initialized = useRef(false);
     getManifestOnLoad(dispatch);
@@ -103,9 +106,19 @@ function Plugin() {
     }
     onAppInit(state, state.appState === 'loaded');
 
-    const handleNavChange = (value) => {
-        dispatch({ type: 'CHANGE_SECTION', payload: value });
+    const renderSection = () => {
+        switch (state.currentSection) {
+            case 'builder':
+                return <Builder />;
+            case 'editor':
+                return <Editor />;
+            case 'production':
+                return <Production />;
+            default:
+                return <Builder />;
+        }
     };
+
     return (
         <Theme theme="spectrum" scale="medium" color="darkest">
             <div className="plugin-container">
@@ -117,14 +130,13 @@ function Plugin() {
                     </div>
                 </div>
                 {state.appState === 'loaded' && (
-                    <Fragment>
+                    <SelectionProvider>
                         <div className="plugin-main">
-                            <Nav currentSection={state.currentSection} onSectionChange={handleNavChange} />
-                            {state.currentSection === "builder" && <Builder />}
-                            {state.currentSection === "editor" && <Editor />}
+                            <Nav />
+                            {renderSection()}
                         </div>
                         <BulkActionBar />
-                    </Fragment>
+                    </SelectionProvider>
                 )}
             </div>
         </Theme>

@@ -275,26 +275,26 @@ function mergeArraysByKey(sourceArray, payloadArray, key) {
  * @param {string} platform - Operating system platform
  * @param {string} theme - Current Photoshop theme
  */
-function logInitData(state) {
+function logInitData(manifest, versions, host, document, arch, platform, theme) {
     try {
         // console.clear();
         console.info("----------------------------------------------------------");
         console.log("----------------------------------------------------------");
         console.log('\n');
         console.log(`%cPLUGIN INFO`, 'font-weight: bolder; font-size: 16px;');
-        console.log(`Loaded: ${state.plugin.id}`);
-        console.log(`Version: ${state.plugin.version}`);
-        console.log(`UXP Version: ${state.version.uxp}`);
+        console.log(`Loaded: ${manifest.id}`);
+        console.log(`Version: ${manifest.version}`);
+        console.log(`UXP Version: ${versions.uxp}`);
         console.log('\n');
         console.log(`%cAPPLICATION INFO`, 'font-weight: bolder; font-size: 16px;');
-        console.log(`Requires Min ${state.host.name} Version: ${state.plugin.host.minVersion}`);
-        console.log(`User Running ${state.host.name} Version: ${state.host.version}`);
-        // console.log(`Current Theme: ${capitalizeFirstLetter(theme)}`);
-        console.log(`On Platform: ${state.version.os === 'win32' ? 'Windows' : 'Mac'} ${state.version.arch}`);
+        console.log(`Requires Min ${host.name} Version: ${manifest.host[0].minVersion}`);
+        console.log(`User Running ${host.name} Version: ${host.version}`);
+        console.log(`Current Theme: ${capitalizeFirstLetter(theme)}`);
+        console.log(`On Platform: ${platform === 'win32' ? 'Windows' : 'Mac'} ${arch}`);
         console.log('\n');
         console.log(`%cDOCUMENT INFO`, 'font-weight: bolder; font-size: 16px;');
-        console.log(`Active Document: ${state.file.fileName}`);
-        console.log(`Active Document Path: ${state.file.filePath}`);
+        console.log(`Active Document: ${document.name}`);
+        console.log(`Active Document Path: ${document.path}`);
         console.log('\n');
         console.log("----------------------------------------------------------");
         console.log("----------------------------------------------------------");
@@ -302,30 +302,6 @@ function logInitData(state) {
         console.error('Error logging initialization data', error);
     }
 }
-
-
-function addDebugListeners() {
-    const events = ['change', 'input', 'click', 'focus', 'blur', 'valuechange'];
-    const eventMonitor = (e) => {
-        console.log('Event captured:', e.type, {
-            target: e.target,
-            currentTarget: e.currentTarget,
-            path: e.composedPath?.() || e.path || [],
-            detail: e.detail,
-            value: e.target.value
-        });
-    };
-    events.forEach(eventType => {
-        document.addEventListener(eventType, eventMonitor, true);
-    });
-    return () => {
-        events.forEach(eventType => {
-            document.removeEventListener(eventType, eventMonitor, true);
-        });
-    };
-}
-
-
 
 /**
  * Searches an array for items matching all provided criteria
@@ -534,8 +510,8 @@ const getSelectionViability = layers => {
                 ? 'layer' :
                 'mixed';
 
-    //console.log("(getSelectionViability) Type:", type);
-    //console.log("(getSelectionViability) Viable:", type !== 'mixed');
+    console.log("(getSelectionViability) Type:", type);
+    console.log("(getSelectionViability) Viable:", type !== 'mixed');
 
     return { type, viable: type !== 'mixed' };
 };
@@ -594,6 +570,5 @@ export {
     mergeUniqueById,
     diffArraysByIds,
     sameIdSet,
-    parsePanelName,
-    addDebugListeners
+    parsePanelName
 };

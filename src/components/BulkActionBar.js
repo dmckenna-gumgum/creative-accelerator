@@ -7,52 +7,36 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-rotate-c-w.js';
 import { ActionButton } from '@swc-react/action-button';
 import { ActionBar } from '@swc-react/action-bar';
 
-import React, { memo, useEffect, useState } from 'react';
-// import { SelectionService } from '../services/SelectionService.js';
 
-function BulkActionBar() {
-    // Local state to track selection and button states
+import React, { memo } from 'react';
+import { useSelection } from '../hooks/useSelection.js';
+
+const BulkActionBar = memo(function BulkActionBar() {
+    const currentSelection = useSelection();
+    let feedbackMessage;
+    let actionBarClasses;
+    const isOpen = currentSelection.active && currentSelection.layers.length > 0;
+    if (isOpen) {
+        switch (currentSelection.type) {
+            case 'group':
+                feedbackMessage = `<span class='plugin-action-bar-pill'>${currentSelection.layers.length} Artboard${currentSelection.layers.length === 1 ? '' : 's'}</span> selected`;
+                actionBarClasses = currentSelection.parentGroupCount.size === 1 ? 'selection-same-groups group-selection' : 'selection-many-groups group-selection';
+                break;
+            case 'layer':
+                feedbackMessage = `<span class='plugin-action-bar-pill'>${currentSelection.layers.length} Layer${currentSelection.layers.length === 1 ? '' : 's'}</span> selected ${currentSelection.parentGroupCount.size === 1 ? ('In The <span class="plugin-action-bar-pill">Same Artboard</span>') : (`Across <span class='plugin-action-bar-pill'>${currentSelection.parentGroupCount.size} Artboards</span>`)}`;
+                actionBarClasses = currentSelection.parentGroupCount.size === 1 ? 'selection-same-groups' : 'selection-many-groups';
+                break;
+            case 'mixed':
+                feedbackMessage = `You've currently selected an artboard, or a mix of artboards and layers. Performing bulk actions on artboards is not supported`;
+                actionBarClasses = 'mixed-selection';
+                break;
+            default:
+                feedbackMessage = 'No layers selected';
+                actionBarClasses = 'selection-same-groups';
+        }
+    }
+
     /*
-    const [selectionState, setSelectionState] = useState({
-        layers: [],
-        viable: true,
-        type: 'layer',
-        identical: true,
-        sameGroup: true,
-        parentGroupCount: 0
-    });
-
-    const [feedbackMessage, setFeedbackMessage] = useState('Initializing...');
-
-    useEffect(() => {
-        // Initialize both services
-        const selectionServiceInstance = SelectionService.initialize({
-            enableListener: true
-        });
-
-        // Subscribe to selection changes
-        const selectionCallback = (selection) => {
-            setSelectionState(selection);
-
-            // Update feedback message based on selection
-            if (selection.layers.length === 0) {
-                setFeedbackMessage('No layers selected');
-            } else if (!selection.viable) {
-                setFeedbackMessage(`Selection not viable for operations`);
-            } else {
-                setFeedbackMessage(`${selection.layers.length} ${selection.type}(s) selected`);
-            }
-        };
-
-        selectionServiceInstance.subscribe(selectionCallback);
-
-        // Clean up on component unmount
-        return () => {
-            selectionServiceInstance.unsubscribe(selectionCallback);
-            SelectionService.destroy();
-        };
-    }, []);
-
     // Handle link button click
     const handleLinkClick = async () => {
     };
@@ -67,8 +51,8 @@ function BulkActionBar() {
     */
 
     return (
-        <ActionBar id="action-bar" open className="plugin-action-bar selection-same-groups">
-            <p id="feedback" className="plugin-action-bar-feedback">Loading...</p>
+        <ActionBar id="action-bar" open={isOpen} className={`plugin-action-bar ${actionBarClasses}`}>
+            <p id="feedback" className="plugin-action-bar-feedback" dangerouslySetInnerHTML={{ __html: feedbackMessage }}></p>
             <ActionButton slot="buttons" id="btnLink" className="action-bar-btn --layers" label="Link">
                 <sp-icon-link slot="icon"></sp-icon-link>
                 Link
@@ -102,6 +86,6 @@ function BulkActionBar() {
             </ActionButton>
         </ActionBar>
     );
-}
+});
 
-export default memo(BulkActionBar);
+export default BulkActionBar;

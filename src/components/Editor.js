@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+import { useSelection } from '../hooks/useSelection.js';
 import { Button } from '@swc-react/button';
 import { ButtonGroup } from '@swc-react/button-group';
 import { FieldLabel } from '@swc-react/field-label';
 import { Tags, Tag } from '@swc-react/tags';
 import { ActionButton } from '@swc-react/action-button';
+import { usePhotoshopActions } from '../hooks/usePhotoshopActions.js';
 
 function Editor() {
+    const currentSelection = useSelection();
 
+    const { selectLayersByName, propagateAsset, propagateMissing } = usePhotoshopActions();
+    // console.log('editor using current selection', currentSelection);
     return (
         <div className="plugin-content plugin-flex plugin-flex--column" data-active-menu="editor">
             <div className="plugin-menu" id="editor-menu">
@@ -55,7 +61,7 @@ function Editor() {
                         <ButtonGroup style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}>
                             <ActionButton id="btnAutoLink" toggles emphasized>Auto Link
                                 Disabled</ActionButton>
-                            <ActionButton emphasized static="secondary" treatment="outline" id="btnSelect">
+                            <ActionButton emphasized static="secondary" treatment="outline" id="btnSelect" onClick={selectLayersByName}>
                                 <sp-icon-layers slot="icon"></sp-icon-layers>
                                 Select Layers by Name
                             </ActionButton>
@@ -71,12 +77,12 @@ function Editor() {
                     <div className="plugin-control-cluster">
                         <h4 className="plugin-label" style={{ marginBottom: '0.5rem' }}>Layer Actions</h4>
                         <ButtonGroup>
-                            <ActionButton emphasized static="secondary" treatment="outline"
+                            <ActionButton emphasized static="secondary" treatment="outline" onClick={propagateAsset}
                                 id="btnDuplicate">
                                 <sp-icon-duplicate slot="icon"></sp-icon-duplicate>
                                 Propagate Asset(s)
                             </ActionButton>
-                            <ActionButton emphasized static="secondary" treatment="outline" id="btnMissing">
+                            <ActionButton emphasized static="secondary" treatment="outline" id="btnMissing" onClick={propagateMissing}>
                                 <sp-icon-wrench slot="icon"></sp-icon-wrench>
                                 Fill Missing Asset(s)
                             </ActionButton>

@@ -2,20 +2,24 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-magic-wand.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-application-delivery.js';
 
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { SideNav, SideNavItem } from '@swc-react/sidenav';
+import { PluginContext } from '../contexts/PluginContext.js';
 
-function Nav({ currentSection, onSectionChange }) {
+function Nav() {
+    const { state, dispatch } = useContext(PluginContext);
     const handleNavChange = (e) => {
-        console.log('Nav Change', e.target.value);
-        onSectionChange && onSectionChange(e.target.value);
+        dispatch({
+            type: 'CHANGE_SECTION',
+            payload: e.target.value
+        });
     };
 
     return (
         <div className="plugin-nav">
             <SideNav
                 className="plugin-sidenav"
-                value={currentSection}
+                value={state.currentSection}
                 onchange={handleNavChange}>
                 <SideNavItem value="builder" label="Build Assistant">
                     <sp-icon-magic-wand slot="icon"></sp-icon-magic-wand>

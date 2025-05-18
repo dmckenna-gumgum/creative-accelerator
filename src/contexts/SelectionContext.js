@@ -1,11 +1,12 @@
 // src/contexts/SelectionContext.js
-import React, { createContext, useReducer, useContext, useEffect, useRef } from 'react';
-import { pluginReducer } from '../reducers/pluginReducer.js';
+import React, { createContext, useContext, useEffect, useRef, useCallback, useMemo, useState } from 'react';
+import { PluginContext } from './PluginContext.js';
+import { initialState } from '../constants/plugin.js'; // Import the initial state
 import { sameIdSet, getSelectionViability, parentGroupCount } from '../utilities/utilities.js';
 const { app, action } = require("photoshop");
 
 // Initial state for selection
-const initialSelectionState = {
+const initialSelectionState = initialState.currentSelection ?? {
     layers: [],
     type: 'layer',
     viable: false,
@@ -14,42 +15,50 @@ const initialSelectionState = {
 };
 
 // Create context
-const SelectionContext = createContext();
-
-// Polling constants
+export const SelectionContext = createContext();
 
 // Provider component
 export function SelectionProvider({ children }) {
-    const [selection, dispatch] = useReducer(pluginReducer, initialSelectionState);
-    const [pollingId, setPollingId] = React.useState(null);
-    const POLLING_INTERVAL = 200; // Poll every 200ms   
+    const { state, dispatch } = useContext(PluginContext);
+    const selectionRef = useRef(state.currentSelection);
+    const sectionRef = useRef(state.currentSection);
     const isPolling = useRef(false);
+    const pollingIdRef = useRef(null);
+    const POLLING_INTERVAL = 200; // Poll every 200ms   
 
-    const checkForSelectionChanges = () => {
-        console.log('(SelectionContext) Checking for selection changes');
+    useEffect(() => {
+        sectionRef.current = state.currentSection
+        selectionRef.current = state.currentSelection;
+    }, [state.currentSelection, state.currentSection]);
+
+    const checkForSelectionChanges = useCallback(async () => {
+        pollingIdRef.current = null;
         try {
-            if (!app.activeDocument) {
-                console.log('(SelectionContext) No active document, stopping polling');
+            const doc = app.activeDocument;
+            if (!doc || doc.activeLayers.length === 0) {
                 setNoSelection();
                 return;
             }
-            if (app.activeDocument.activeLayers.length === 0) {
-                console.log('(SelectionContext) No active layers, stopping polling');
-                setNoSelection();
-                return;
-            }
-            processSelection(app.activeDocument.activeLayers);
-        } catch (error) {
-            console.error('(SelectionContext) Error during polling:', error);
+
+            await processSelection(doc.activeLayers);
+        } catch (err) {
+            console.error('(SelectionContext) Poll error:', err);
             setNoSelection();
         }
-    };
+    }, []);
 
-    const processSelection = async (layers) => {
-        console.log('(SelectionContext) Processing selection:', layers.length);
-        const selectionIdentical = selection.layers.length > 0 ? sameIdSet(selection.layers, layers) : true;
-        if (selectionIdentical === true) {
-            console.log('(SelectionContext) Selection is identical, restarting poll');
+    const processSelection = useCallback(async (layers) => {
+        const prev = selectionRef.current;
+        //i'm trying to do this in a way where I understand if it's not-identical through easier comparisons first, and then harder comparisons if it
+        //passes the easier checks. sameIdSet is somewhat expensive, so I don't want to run it unless I have to.
+        const selectionIdentical =
+            //if they don't have equal lengths, they can't be identical
+            (layers.length !== prev.layers.length) ? false :
+                //if they have equal lengths of 1, check if the first layer id is the same
+                (layers.length !== 1 && prev.layers.length !== 1 && layers[0].id !== prev.layers[0].id) ? false :
+                    //if they have equal lengths of more than 1, check if both layer id sets match.
+                    !(sameIdSet(prev.layers, layers)) ? false : true;
+        if (selectionIdentical) {
             //they're identical, restart the poll and return 
             startSelectionPolling();
             return;
@@ -57,20 +66,22 @@ export function SelectionProvider({ children }) {
         const { viable, type } = getSelectionViability(layers);
         const groupCount = parentGroupCount(layers);
         const newSelection = {
-            layers,
+            layers: [...layers],
             type,
             viable,
             identical: false,
-            parentGroupCount: groupCount
+            parentGroupCount: groupCount,
+            //things that use this selection should stop using it if it's not active. Active should only be valid when the user is in the editor section.
+            //eventually maybe other sections will want access to the selection, but for now it should only be used in the editor mode.
+            active: sectionRef.current === 'editor'
         };
-
         // Set selection in state
         dispatch({
             type: 'SET_SELECTION',
             payload: newSelection
         });
         startSelectionPolling();
-    }
+    }, [state.currentSelection]);
 
     const setNoSelection = () => {
         dispatch({
@@ -81,62 +92,70 @@ export function SelectionProvider({ children }) {
     }
 
     const startSelectionPolling = () => {
+        if (pollingIdRef.current) return;
         isPolling.current = true;
-        const id = setTimeout(checkForSelectionChanges, POLLING_INTERVAL);
-        setPollingId(id);
+        pollingIdRef.current = setTimeout(async () => await checkForSelectionChanges(), POLLING_INTERVAL);
     };
 
     const stopSelectionPolling = () => {
         isPolling.current = false;
-        if (pollingId) clearTimeout(pollingId);
-        setPollingId(null);
+        if (pollingIdRef.current) {
+            clearTimeout(pollingIdRef.current);
+            pollingIdRef.current = null;
+        }
     };
 
     // Handler for selection changes
     const handleSelectionChange = async () => {
+        stopSelectionPolling();
         try {
-            stopSelectionPolling();
             const layers = app.activeDocument.activeLayers;
-            console.log('(SelectionContext) Selection changed:', layers);
-            processSelection(layers);
+            console.log('(SelectionContext) Selection changed:', layers.length);
+            await processSelection(layers);
         } catch (error) {
             console.error("Error processing selection:", error);
         }
     }
 
     useEffect(() => {
+        if (state.currentSection !== 'editor') {
+            console.log('(SelectionContext) Not in editor section, skipping selection setup');
+            // Make sure polling is stopped when not in editor
+            stopSelectionPolling();
+            return;
+        }
         const listener = action.addNotificationListener(
             [{ event: "select" }],
             handleSelectionChange
         );
-        handleSelectionChange();
+        if (app.activeDocument && app.activeDocument.activeLayers.length > 0) {
+            //run an initial handle if there is a selection already when the plugin loads.
+            handleSelectionChange();
+        }
         return () => {
             setNoSelection();
             action.removeNotificationListener([{ event: "select" }], handleSelectionChange);
         };
-    }, []);
+    }, [state.currentSection]);
 
-    // Value to be provided
-    const contextValue = {
-        selection,
-        setSelection: (newSelection) => dispatch({
-            type: 'SET_SELECTION',
-            payload: newSelection
-        })
-    };
+    // 1. memoise the dispatcher so the reference is stable
+    const setSelection = useCallback(
+        (newSelection) =>
+            dispatch({ type: 'SET_SELECTION', payload: newSelection }),
+        [dispatch]
+    );
+    // 2. memoise the whole context value;
+    const contextValue = useMemo(
+        () => ({
+            selection: state.currentSelection,
+            setSelection
+        }),
+        [state.currentSelection, setSelection]
+    );
 
     return (
         <SelectionContext.Provider value={contextValue}>
             {children}
         </SelectionContext.Provider>
     );
-}
-
-// Custom hook for consuming the context
-export function useSelection() {
-    const context = useContext(SelectionContext);
-    if (!context) {
-        throw new Error('useSelection must be used within a SelectionProvider');
-    }
-    return context;
 }
