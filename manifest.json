@@ -1,0 +1,67 @@
+{
+  "name": "Creative Accelerator",
+  "id": "creative-accelerator",
+  "version": "3.0.0",
+  "main": "index.html",
+  "manifestVersion": 5,
+  "featureFlags": {
+    "enableSWCSupport": true
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "creative-accelerator-panel",
+      "label": {
+        "default": "Creative Accelerator"
+      },
+      "minimumSize": {
+        "width": 1200,
+        "height": 300
+      },
+      "maximumSize": {
+        "width": 4000,
+        "height": 300
+      },
+      "preferredDockedSize": {
+        "width": 2000,
+        "height": 300
+      },
+      "preferredFloatingSize": {
+        "width": 1200,
+        "height": 300
+      },
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "assets/icon-light.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "light",
+            "darkest"
+          ]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "assets/icon-dark.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "dark",
+            "lightest"
+          ]
+        }
+      ]
+    }
+  ],
+  "host": {
+    "app": "PS",
+    "minVersion": "24.4.0"
+  }
+}

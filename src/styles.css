@@ -1,0 +1,640 @@
+/* Main Styles for Creative Studio Companion */
+:root {
+  /* --spectrum-neutral-content-color-default: var(--uxp-host-text-color);
+  --spectrum-neutral-content-color-hover: var(--uxp-host-text-color);
+  --spectrum-fieldlabel-color: var(--uxp-host-text-color); */
+}
+
+body,
+html,
+sp-theme {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--uxp-host-background-color);
+  color: var(--uxp-host-text-color);
+  border-color: var(--uxp-host-border-color);
+  font-size: var(--uxp-host-font-size);
+
+}
+
+/*
+sp-button {  
+  --spectrum-button-background-color-default: var( --uxp-host-background-color );
+  --spectrum-button-background-color-hover: var( --uxp-host-widget-hover-background-color );
+  --spectrum-button-border-color-default: var( --uxp-host-border-color );
+  --spectrum-button-border-color-hover: var( ---uxp-host-widget-hover-border-color );
+  --spectrum-button-border-color-down: var( --system-spectrum-button-secondary-outline-border-color-down );
+  --spectrum-button-border-color-focus: var( --system-spectrum-button-secondary-outline-border-color-focus );
+  --spectrum-button-content-color-default: var( --uxp-host-text-color);
+  --spectrum-button-content-color-hover: var( --uxp-host-widget-hover-text-color );
+  font-weight: var(--spectrum-regular-font-weight);
+}
+
+sp-field-label {
+  color: var(--uxp-host-text-color);
+}
+*/
+sp-sidenav {
+  --spectrum-sidenav-content-color-default: var(--uxp-host-text-color);
+  --spectrum-sidenav-content-color-hover: var(--uxp-host-link-hover-text-color);
+  --spectrum-sidenav-content-color-default-selected: white;
+  /*var(--uxp-host-text-color);*/
+  --spectrum-sidenav-content-color-hover-selected: white;
+  /* var( --uxp-host-link-hover-text-color );*/
+  --spectrum-sidenav-background-hover: var(--uxp-host-widget-hover-background-color);
+  --spectrum-sidenav-item-background-down: var(--uxp-host-border-color);
+  --spectrum-sidenav-item-background-default-selected: var(--spectrum-informative-background-color-default);
+  --spectrum-sidenav-background-hover-selected: var(--uxp-host-link-text-color);
+  --spectrum-sidenav-item-background-down-selected: var(--uxp-host-border-color);
+  --spectrum-sidenav-background-key-focus-selected: var(--uxp-host-border-color);
+  --spectrum-sidenav-header-color: var(--uxp-host-text-color);
+}
+
+/*
+sp-switch {
+  --spectrum-switch-label-color-default: var( --uxp-host-text-color );
+  --spectrum-switch-label-color-hover: var( --uxp-host-widget-hover-text-color );
+  --spectrum-switch-background-color: var(--uxp-host-border-color);
+  --spectrum-switch-background-color-selected-default: var( --uxp-host-text-color );
+  --spectrum-switch-handle-border-color-disabled: var( --spectrum-disabled-content-color );
+}
+
+sp-field-label {
+
+}
+*/
+sp-dialog {
+  padding: 0rem;
+  color: var(--uxp-host-text-color);
+  --spectrum-fieldlabel-color: var(--uxp-host-text-color);
+}
+
+sp-switch {
+  margin: 0.25rem 0;
+}
+
+sp-button-group {
+  display: flex;
+  justify-content: stretch;
+}
+
+sp-button[size="xl"][icon-only] {
+  --spectrum-button-min-width: 1rem;
+  --spectrum-button-edge-to-visual: 0.75rem;
+  --spectrum-button-edge-to-text: 0.75rem;
+}
+
+.plugin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  height: 100%;
+}
+
+.plugin-action-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+
+}
+
+.sp-action-bar {
+  --spectrum-actionbar-shadow-horizontal: var(--spectrum-drop-shadow-x);
+  --spectrum-actionbar-shadow-vertical: var(--spectrum-drop-shadow-y);
+  --spectrum-actionbar-shadow-blur: var(--spectrum-drop-shadow-blur);
+  --spectrum-actionbar-shadow-color: var(--spectrum-drop-shadow-color);
+}
+
+sp-action-bar.selection-many-groups {
+  --spectrum-actionbar-popover-background-color: var(--spectrum-accent-color-500);
+  --spectrum-actionbar-popover-border-color: var(--spectrum-informative-background-color-default);
+}
+
+sp-action-bar.selection-same-groups {
+  --spectrum-actionbar-popover-background-color: var(--spectrum-celery-500);
+  --spectrum-actionbar-popover-border-color: var(--spectrum-celery-background-color-default);
+}
+
+sp-action-bar.group-selection {
+  --spectrum-actionbar-popover-background-color: var(--spectrum-purple-500);
+  --spectrum-actionbar-popover-border-color: var(--spectrum-purple-background-color-default);
+}
+
+sp-action-bar.mixed-selection {
+  --spectrum-actionbar-popover-background-color: var(--spectrum-red-background-color-default);
+  --spectrum-actionbar-popover-border-color: var(--spectrum-red-background-color-default);
+}
+
+sp-action-bar.mixed-selection sp-action-button[disabled] {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+sp-action-bar.selection-many-groups sp-action-button {
+  --spectrum-actionbutton-background-color-hover: var(--spectrum-accent-color-700);
+  --spectrum-actionbutton-background-color-down: var(--spectrum-accent-color-400);
+}
+
+sp-action-bar.selection-same-groups sp-action-button {
+  --spectrum-actionbutton-background-color-hover: var(--spectrum-celery-700);
+  --spectrum-actionbutton-background-color-down: var(--spectrum-celery-400);
+}
+
+sp-action-bar.group-selection sp-action-button {
+  --spectrum-actionbutton-background-color-hover: var(--spectrum-purple-700);
+  --spectrum-actionbutton-background-color-down: var(--spectrum-purple-400);
+}
+
+.plugin-control-cluster sp-action-button {
+  --spectrum-actionbutton-background-color-default: var(--uxp-host-background-color);
+  --spectrum-actionbutton-background-color-hover: var(--uxp-host-background-color);
+  --spectrum-actionbutton-background-color-down: var(--uxp-host-background-color);
+  --spectrum-actionbutton-background-color-active: var(--uxp-host-background-color);
+  margin: 0.25rem 0.5rem 0.25rem 0;
+  position: relative;
+}
+
+.action-bar-btn {
+  display: none;
+}
+
+.plugin-control-cluster sp-action-button#btnAutoLink {
+  --spectrum-actionbutton-border-color-default: var(--uxp-host-border-color);
+}
+
+.plugin-action-bar-pill {
+  border-radius: 0.75rem;
+  padding: 0.25rem 0.8rem;
+  border: 1.5px solid var(--uxp-host-text-color);
+  margin: 0 0.6rem;
+  font-size: 0.8rem;
+  background-color: var(--uxp-host-border-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
+sp-action-bar.selection-many-groups .plugin-action-bar-pill {
+  background-color: var(--spectrum-accent-color-300);
+}
+
+sp-action-bar.selection-same-groups .plugin-action-bar-pill {
+  background-color: var(--spectrum-celery-300);
+}
+
+sp-action-bar.group-selection .plugin-action-bar-pill {
+  background-color: var(--spectrum-purple-300);
+}
+
+/**/
+.--layers,
+.--artboards {
+  display: none;
+}
+
+sp-action-bar.selection-many-groups .--layers,
+sp-action-bar.selection-same-groups .--layers {
+  display: flex;
+}
+
+sp-action-bar.selection-many-groups .--artboards,
+sp-action-bar.selection-same-groups .--artboards {
+  display: none;
+}
+
+sp-action-bar.selection-many-groups.group-selection .--layers,
+sp-action-bar.selection-same-groups.group-selection .--layers {
+  display: none;
+}
+
+sp-action-bar.selection-many-groups.group-selection .--artboards,
+sp-action-bar.selection-same-groups.group-selection .--artboards {
+  display: flex;
+}
+
+.plugin-action-bar-feedback {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  height: 100%;
+  position: relative;
+  top: -0.25rem;
+}
+
+sp-action-bar.mixed-selection .plugin-action-bar-feedback {
+  top: 0;
+}
+
+.plugin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--uxp-host-border-color);
+  flex: 0 1 auto;
+}
+
+.plugin-title {
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+}
+
+.plugin-main {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  flex: 1;
+}
+
+.plugin-nav {
+  padding: 1rem;
+}
+
+.plugin-nav {
+  width: 200px;
+  height: 100%;
+  border-right: 1px solid var(--uxp-host-border-color);
+}
+
+.plugin-sidenav {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item {
+  padding: 10px 15px;
+  margin: 5px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  color: var(--uxp-host-text-color);
+  transition: background-color 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: var(--uxp-host-widget-hover-background-color);
+}
+
+.nav-item-selected {
+  background-color: var(--spectrum-informative-background-color-default);
+  color: white;
+}
+
+.plugin-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.plugin-menu-section {
+  padding: 1rem 2rem;
+  border-right: 1px solid var(--uxp-host-border-color);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1 1 auto;
+}
+
+.plugin-menu-section:first-child {
+  padding-left: 2rem;
+}
+
+.plugin-menu-section:last-child {
+  padding-right: 2rem;
+  border-right: none;
+}
+
+.plugin-control-cluster {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.plugin-control-cluster--row {
+  flex-direction: row;
+}
+
+.--disabled:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(50, 50, 50, 0.75);
+  z-index: 9;
+}
+
+.plugin-control-cluster sp-button-group {
+  padding: 0.25rem;
+
+  position: relative;
+}
+
+.plugin-label {
+  font-weight: 500;
+  font-size: var(--uxp-host-font-size-larger);
+  margin-bottom: 0.5rem;
+}
+
+.plugin-filter-cluster {
+  padding: 0.5rem 0rem;
+}
+
+.plugin-tag {
+  margin: 0.125rem;
+  cursor: pointer;
+}
+
+.plugin-tag {
+  --spectrum-tag-background-color: var(--uxp-host-background-color);
+  --spectrum-tag-background-color-hover: var(--uxp-host-border-color);
+
+  --spectrum-tag-border-color: var(--uxp-host-border-color);
+
+  --spectrum-tag-content-color: var(--uxp-host-text-color);
+
+}
+
+.plugin-tag--device {
+  --spectrum-tag-background-color-active: var(--spectrum-magenta-300);
+
+  --spectrum-tag-border-color-hover: var(--spectrum-global-color-magenta-300);
+  --spectrum-tag-border-color-active: var(--spectrum-global-color-magenta-700);
+
+  --spectrum-tag-content-color-hover: var(--spectrum-global-color-magenta-300);
+  --spectrum-tag-content-color-active: var(--uxp-host-text-color);
+}
+
+.plugin-tag--active.plugin-tag--device {
+  --spectrum-tag-border-color: var(--spectrum-magenta-700);
+  --spectrum-tag-background-color-active: var(--spectrum-magenta-700);
+
+  --spectrum-tag-background-color: var(--spectrum-magenta-500);
+  --spectrum-tag-background-color-hover: var(--spectrum-magenta-300);
+  --spectrum-tag-background-color-active: var(--spectrum-magenta-700);
+
+  --spectrum-tag-content-color: var(--uxp-host-text-color);
+  --spectrum-tag-content-color-hover: var(--uxp-host-text-color);
+  --spectrum-tag-content-color-active: var(--uxp-host-text-color);
+}
+
+.plugin-tag--state {
+  --spectrum-tag-background-color-active: var(--uxp-host-background-color);
+
+  --spectrum-tag-border-color-hover: var(--spectrum-global-color-fuchsia-300);
+  --spectrum-tag-border-color-active: var(--spectrum-global-color-fuchsia-700);
+
+  --spectrum-tag-content-color-hover: var(--spectrum-global-color-fuchsia-300);
+  --spectrum-tag-content-color-active: var(--spectrum-global-color-fuchsia-700);
+}
+
+.plugin-tag--active.plugin-tag--state {
+  --spectrum-tag-border-color: var(--spectrum-fuchsia-700);
+  --spectrum-tag-background-color-active: var(--spectrum-fuchsia-300);
+
+  --spectrum-tag-background-color: var(--spectrum-fuchsia-500);
+  --spectrum-tag-background-color-hover: var(--spectrum-fuchsia-300);
+  --spectrum-tag-background-color-active: var(--spectrum-fuchsia-700);
+
+  --spectrum-tag-content-color: var(--uxp-host-text-color);
+  --spectrum-tag-content-color-hover: var(--uxp-host-text-color);
+  --spectrum-tag-content-color-active: var(--uxp-host-text-color);
+}
+
+.plugin-filter-note {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: var(--uxp-host-font-size-smaller);
+  color: var(--spectrum-celery-600);
+}
+
+.plugin-filter-note--restricted {
+  color: var(--spectrum-red-600);
+}
+
+.plugin-option-note {
+  font-size: var(--uxp-host-font-size-smaller);
+  flex: 0 1 auto;
+}
+
+.plugin-flex {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.plugin-flex--flex-row {
+  flex-direction: row;
+}
+
+.plugin-flex--flex-column {
+  flex-direction: column;
+}
+
+.plugin-flex--no-grow {
+  flex-grow: 0;
+}
+
+.plugin-menu--build {
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  align-content: stretch;
+  padding: 1rem;
+}
+
+.plugin-step-section {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 1rem 4rem;
+}
+
+.plugin-step-section--fixed {
+  /* max-width: 900px; */
+  text-align: center;
+}
+
+.plugin-progress-component {
+  flex: 1 1 auto;
+}
+
+.plugin-progress-bar {
+  height: 0.5rem;
+  background-color: var(--uxp-host-border-color);
+
+  color: var(--plugin-text);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.plugin-progress-bar-fill {
+  height: 100%;
+  background-color: var(--spectrum-informative-background-color-default);
+  width: 5%;
+}
+
+.plugin-step-note {
+  font-size: var(--spectrum-theme-font-size-smaller);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: var(--plugin-text);
+}
+
+.plugin-step-number {
+  font-weight: 700;
+}
+
+.plugin-step-text {
+  display: inline-block;
+  max-width: 900px;
+  text-align: center;
+  margin: 0 1rem;
+}
+
+.plugin-step-button {
+  flex: 0 1 auto;
+}
+
+.plugin-step-sub-ui {
+  flex: 0 1 auto;
+  display: none;
+  pointer-events: none;
+}
+
+.-show {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  pointer-events: auto;
+}
+
+.plugin-sub-step-button {
+  flex: 0 1 auto;
+}
+
+.plugin-step-button:first-child {
+  margin-right: 2rem;
+}
+
+.plugin-step-button:last-child {
+  margin-left: 2rem;
+}
+
+.plugin-dialog {
+  padding: 0rem;
+  height: 200px;
+  width: 350px;
+  color: var(--uxp-host-text-color);
+}
+
+.plugin-dialog-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: stretch;
+  align-items: stretch;
+}
+
+.plugin-dialog-label {}
+
+.plugin-dialog-input-container {
+  margin-bottom: 2rem;
+}
+
+.plugin-dialog-input {
+  width: 100%;
+}
+
+.plugin-dialog-button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.plugin-dialog-button {
+  flex: 0 1 auto;
+}
+
+.plugin-dialog-button-primary {
+  flex: 1 1 auto;
+}
+
+.plugin-history {
+  display: none;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+}
+
+.plugin-history.-show {
+  display: flex;
+}
+
+.plugin-history sp-button-group {
+  margin-left: 0.4rem;
+}
+
+.plugin-history-btn {
+  margin: 0 0.25rem;
+  --spectrum-button-min-width: 0.75rem;
+  --spectrum-button-edge-to-visual: 1.25rem;
+  --spectrum-button-edge-to-text: 1.25rem;
+  --spectrum-button-height: 1.125rem;
+  --spectrum-button-font-size: 0.625rem;
+  --spectrum-button-bottom-to-text: 0.4rem;
+}
+
+.plugin-filter--pillnote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  background-color: var(--uxp-host-background-color);
+  color: var(--uxp-host-text-color);
+
+}
+
+.plugin-history-btn {
+  margin: 0 0.25rem;
+  --spectrum-button-min-width: 0.75rem;
+  --spectrum-button-edge-to-visual: 1.25rem;
+  --spectrum-button-edge-to-text: 1.25rem;
+  --spectrum-button-height: 1.125rem;
+  --spectrum-button-font-size: 0.625rem;
+  --spectrum-button-bottom-to-text: 0.4rem;
+}
+
+.plugin-filter--pillnote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  background-color: var(--uxp-host-background-color);
+  color: var(--uxp-host-text-color);
+
+}
