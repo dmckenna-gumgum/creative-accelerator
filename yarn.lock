@@ -3049,6 +3049,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@spectrum-web-components/dialog@npm:0.37.0, @swc-uxp-internal/dialog@npm:@spectrum-web-components/dialog@0.37.0":
+  version: 0.37.0
+  resolution: "@spectrum-web-components/dialog@npm:0.37.0"
+  dependencies:
+    "@spectrum-web-components/base": "npm:^0.37.0"
+    "@spectrum-web-components/button": "npm:^0.37.0"
+    "@spectrum-web-components/button-group": "npm:^0.37.0"
+    "@spectrum-web-components/divider": "npm:^0.37.0"
+    "@spectrum-web-components/icons-workflow": "npm:^0.37.0"
+    "@spectrum-web-components/modal": "npm:^0.37.0"
+    "@spectrum-web-components/shared": "npm:^0.37.0"
+    "@spectrum-web-components/underlay": "npm:^0.37.0"
+  checksum: 10c0/d51faf25faabe77d01a1705672a11038ceb89425174eb3f439632f1a2a8296153ed8d1636cedbc783dd05c788c44fd39a87a62411b5ad7a48b477163eeb3b965
+  languageName: node
+  linkType: hard
+
 "@spectrum-web-components/divider@npm:0.37.0, @swc-uxp-internal/divider@npm:@spectrum-web-components/divider@0.37.0":
   version: 0.37.0
   resolution: "@spectrum-web-components/divider@npm:0.37.0"
@@ -3503,6 +3519,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc-react/dialog@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@swc-react/dialog@npm:1.6.0"
+  dependencies:
+    "@lit/react": "npm:^1.0.2"
+    "@spectrum-web-components/dialog": "npm:^1.6.0"
+  peerDependencies:
+    next: ~13.4 || ~14
+  peerDependenciesMeta:
+    next:
+      optional: true
+  checksum: 10c0/74ac331f8b59cc1aecaf4e0ce8f83085ef183aa651a1cfab5d54315686da7206c20cea678c9c45d58a4d7671bf0bdd91eddb40da33a21407fc0d88164da1f549
+  languageName: node
+  linkType: hard
+
 "@swc-react/divider@npm:^1.6.0":
   version: 1.6.0
   resolution: "@swc-react/divider@npm:1.6.0"
@@ -3578,6 +3609,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@swc-react/overlay@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@swc-react/overlay@npm:1.6.0"
+  dependencies:
+    "@lit/react": "npm:^1.0.2"
+    "@spectrum-web-components/overlay": "npm:^1.6.0"
+  peerDependencies:
+    next: ~13.4 || ~14
+  peerDependenciesMeta:
+    next:
+      optional: true
+  checksum: 10c0/a55a854ab2fb8fbe27693947e776e8015141d4627c12136aa0840eb48255e1fec4392796b3f5a2ccf4760863ad5131a59cdb8c4cdd3e8dc4e830881a148af843
+  languageName: node
+  linkType: hard
+
+"@swc-react/popover@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@swc-react/popover@npm:1.6.0"
+  dependencies:
+    "@lit/react": "npm:^1.0.2"
+    "@spectrum-web-components/popover": "npm:^1.6.0"
+  peerDependencies:
+    next: ~13.4 || ~14
+  peerDependenciesMeta:
+    next:
+      optional: true
+  checksum: 10c0/6cab7582b83fd8fca032f1c267ddce85c1cb56a656c6bd8094bb0faee93fe95a49ff3fa8df8c2ca368e7f40497572daa8f84dd263b8d36d99ee58908a3cb3d65
+  languageName: node
+  linkType: hard
+
 "@swc-react/sidenav@npm:^1.6.0":
   version: 1.6.0
   resolution: "@swc-react/sidenav@npm:1.6.0"
@@ -3647,22 +3708,6 @@ __metadata:
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
   checksum: 10c0/6e965b4a61e54978f00e97fce76c3c4346e1665e1b8c35d2c571f86bbcfb3e6141420f3163b47c01fd5bc970a528797261b2b848033ff7dab2d06150db554eb5
-  languageName: node
-  linkType: hard
-
-"@swc-uxp-internal/dialog@npm:@spectrum-web-components/dialog@0.37.0":
-  version: 0.37.0
-  resolution: "@spectrum-web-components/dialog@npm:0.37.0"
-  dependencies:
-    "@spectrum-web-components/base": "npm:^0.37.0"
-    "@spectrum-web-components/button": "npm:^0.37.0"
-    "@spectrum-web-components/button-group": "npm:^0.37.0"
-    "@spectrum-web-components/divider": "npm:^0.37.0"
-    "@spectrum-web-components/icons-workflow": "npm:^0.37.0"
-    "@spectrum-web-components/modal": "npm:^0.37.0"
-    "@spectrum-web-components/shared": "npm:^0.37.0"
-    "@spectrum-web-components/underlay": "npm:^0.37.0"
-  checksum: 10c0/d51faf25faabe77d01a1705672a11038ceb89425174eb3f439632f1a2a8296153ed8d1636cedbc783dd05c788c44fd39a87a62411b5ad7a48b477163eeb3b965
   languageName: node
   linkType: hard
 
@@ -3764,7 +3809,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc-uxp-wrappers/help-text@npm:2.0.0":
+"@swc-uxp-wrappers/help-text@npm:2.0.0, @swc-uxp-wrappers/help-text@npm:^2.0.0":
   version: 2.0.0
   resolution: "@swc-uxp-wrappers/help-text@npm:2.0.0"
   dependencies:
@@ -14042,11 +14087,14 @@ __metadata:
     "@swc-react/button": "npm:^1.6.0"
     "@swc-react/button-group": "npm:^1.6.0"
     "@swc-react/checkbox": "npm:^1.6.0"
+    "@swc-react/dialog": "npm:^1.6.0"
     "@swc-react/divider": "npm:^1.6.0"
     "@swc-react/field-group": "npm:^1.6.0"
     "@swc-react/field-label": "npm:^1.6.0"
     "@swc-react/icon": "npm:^1.6.0"
     "@swc-react/icons-workflow": "npm:^1.6.0"
+    "@swc-react/overlay": "npm:^1.6.0"
+    "@swc-react/popover": "npm:^1.6.0"
     "@swc-react/sidenav": "npm:^1.6.0"
     "@swc-react/switch": "npm:^1.6.0"
     "@swc-react/tags": "npm:^1.6.0"
@@ -14062,6 +14110,7 @@ __metadata:
     "@swc-uxp-wrappers/divider": "npm:^2.0.0"
     "@swc-uxp-wrappers/field-group": "npm:^2.0.0"
     "@swc-uxp-wrappers/field-label": "npm:^2.0.0"
+    "@swc-uxp-wrappers/help-text": "npm:^2.0.0"
     "@swc-uxp-wrappers/overlay": "npm:^2.0.0"
     "@swc-uxp-wrappers/popover": "npm:^2.0.0"
     "@swc-uxp-wrappers/sidenav": "npm:*"

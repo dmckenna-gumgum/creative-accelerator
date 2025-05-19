@@ -182,6 +182,7 @@ function escapeRegex(s) {
  * @returns {RegExp} - Regular expression that matches strings matching the active filters
  */
 function buildScopeRegex(scopeFilters) {
+    console.log(scopeFilters);
     const byType = {
         state: scopeFilters
             .filter(f => f.type === 'state')

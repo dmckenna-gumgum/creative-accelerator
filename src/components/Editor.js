@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import { useSelection } from '../hooks/useSelection.js';
+import { useAutoLink } from '../hooks/useAutoLink.js';
 import { Button } from '@swc-react/button';
 import { ButtonGroup } from '@swc-react/button-group';
 import { FieldLabel } from '@swc-react/field-label';
@@ -13,10 +14,16 @@ function Editor() {
     const currentSelection = useSelection();
     const { state, dispatch } = useContext(PluginContext);
     const { creativeConfig } = state;
-    const { activeFilters } = state.editor;
-
+    const { activeFilters, autoLinkEnabled } = state.editor;
+    const { toggleAutoLink, processSelectionChange } = useAutoLink();
     const { selectLayersByName, propagateAsset, propagateMissing, matchStylesByName } = usePhotoshopActions();
     // console.log('editor using current selection', currentSelection);
+
+    useEffect(() => {
+        if (currentSelection) {
+            processSelectionChange(currentSelection, activeFilters);
+        }
+    }, [currentSelection, processSelectionChange, activeFilters]);
 
     // Handler for toggling filters
     const handleFilterToggle = (type, name, value, isActive) => {
@@ -147,8 +154,10 @@ function Editor() {
                         <h4 className="plugin-label" style={{ marginBottom: '0.5rem' }}>Selection Tools</h4>
 
                         <ButtonGroup style={{ display: 'flex', alignItems: 'center', alignContent: 'center' }}>
-                            <ActionButton id="btnAutoLink" toggles emphasized>Auto Link
-                                Disabled</ActionButton>
+                            <ActionButton id="btnAutoLink" toggles emphasized onClick={toggleAutoLink}>
+                                {autoLinkEnabled ? <sp-icon-link slot="icon"></sp-icon-link> : <sp-icon-unlink slot="icon"></sp-icon-unlink>}
+                                Auto Link {autoLinkEnabled ? 'Enabled' : 'Disabled'}
+                            </ActionButton>
                             <ActionButton emphasized static="secondary" treatment="outline" id="btnSelect" onClick={selectLayersByName}>
                                 <sp-icon-layers slot="icon"></sp-icon-layers>
                                 Select Layers by Name

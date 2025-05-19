@@ -1,0 +1,73 @@
+/* Dialog styling for UXP */
+
+/* Main dialog element styling */
+.uxp-dialog {
+    border: none;
+    padding: 0;
+    background: #323232;
+    border-radius: 4px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    color: #e8e8e8;
+}
+
+/* Make dialog backdrop semi-transparent */
+.uxp-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Spectrum Dialog component styling */
+sp-dialog {
+    --spectrum-dialog-confirm-background-color: #323232;
+    --spectrum-dialog-background-color: #323232;
+    --spectrum-dialog-confirm-title-text-color: #e8e8e8;
+    --spectrum-dialog-confirm-description-text-color: #e8e8e8;
+    --spectrum-dialog-title-text-color: #e8e8e8;
+    --spectrum-dialog-description-text-color: #e8e8e8;
+    --spectrum-dialog-content-padding-top: 16px;
+    --spectrum-dialog-padding: 20px;
+    min-width: 320px;
+    max-width: 400px;
+}
+
+/* Fixed dialog title styling */
+sp-dialog h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #e8e8e8;
+}
+
+sp-dialog sp-textfield {
+    --spectrum-textfield-placeholder-font-size: 2rem;
+}
+
+/* Input field styling */
+.dialog-input-container {
+    margin-bottom: 16px;
+}
+
+.dialog-field-label {
+    color: white;
+}
+
+sp-textfield {
+    width: 100%;
+    margin-top: 8px;
+}
+
+/* Error message styling */
+.dialog-error {
+    color: #ff7b7b;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Message text styling */
+.dialog-message {
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+/* Button gap in dialog footer */
+sp-dialog sp-button+sp-button {
+    margin-left: 8px;
+}

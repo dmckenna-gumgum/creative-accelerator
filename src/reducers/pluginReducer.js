@@ -27,12 +27,9 @@ export const pluginReducer = (state, action) => {
         case 'SET_SELECTION':
             return { ...state, currentSelection: action.payload };
         case 'ADD_ACTIVE_FILTER':
-            // Check if the filter already exists
             const exists = state.editor.activeFilters.some(
                 filter => filter.type === action.payload.type && filter.name === action.payload.name
             );
-
-            // If it doesn't exist, add it
             if (!exists) {
                 return {
                     ...state,
@@ -59,6 +56,45 @@ export const pluginReducer = (state, action) => {
                 editor: {
                     ...state.editor,
                     activeFilters: []
+                }
+            };
+        case 'TOGGLE_AUTOLINK':
+            return {
+                ...state,
+                editor: {
+                    ...state.editor,
+                    autoLinkEnabled: action.payload
+                }
+            };
+        case 'NEXT_BUILD_STEP':
+            const nextStepNum = Math.min(action.payload + 1, state.builder.steps.length - 1);
+            const nextStep = { ...state.builder.steps[nextStepNum] };
+            return {
+                ...state,
+                builder: {
+                    ...state.builder,
+                    currentStepNum: nextStepNum,
+                    currentStep: nextStep
+                }
+            };
+        case 'PREV_BUILD_STEP':
+            const prevStepNum = Math.max(action.payload - 1, 0);
+            const prevStep = { ...state.builder.steps[prevStepNum] };
+            return {
+                ...state,
+                builder: {
+                    ...state.builder,
+                    currentStepNum: prevStepNum,
+                    currentStep: prevStep
+                }
+            };
+        case 'SET_BUILD_STEP':
+            return {
+                ...state,
+                builder: {
+                    ...state.builder,
+                    currentStepNum: action.payload,
+                    currentStep: { ...state.builder.steps[action.payload] }
                 }
             };
         case 'RESET':

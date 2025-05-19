@@ -15,7 +15,8 @@ import "./polyfills.js";
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./styles.css";
+// Import styles
+import "./styles/styles.css";
 import App from "./App.js";
 window.React = React;
 

@@ -12,6 +12,7 @@ export default async function propagateAsset(executionContext, selection, missin
     const sourceLayerNames = originalSelection.map(layer => layer.name);
     const sourceContainer = getLayerContainer(originalSelection);
     const sourceLayers = sourceContainer.layers;
+    console.log(sourceContainer, filter);
     const targetContainers = findValidGroups(app.activeDocument.layers, sourceContainer, filter);
     let skippedTargets = 0;
     let successfulPropagations = 0;

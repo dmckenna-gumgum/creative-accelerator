@@ -47,11 +47,14 @@ const RAW_RUNTIME_STATE =
           ["@swc-react/button", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/button-group", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/checkbox", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@swc-react/dialog", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/divider", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/field-group", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/field-label", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/icon", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/icons-workflow", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@swc-react/overlay", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@swc-react/popover", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/sidenav", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/switch", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/tags", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
@@ -67,6 +70,7 @@ const RAW_RUNTIME_STATE =
           ["@swc-uxp-wrappers/divider", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/field-group", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/field-label", "npm:2.0.0"],\
+          ["@swc-uxp-wrappers/help-text", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/overlay", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/popover", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/sidenav", "npm:2.0.0"],\
@@ -6042,6 +6046,30 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@swc-react/dialog", [\
+      ["npm:1.6.0", {\
+        "packageLocation": "../../Users/dmcke/AppData/Local/Yarn/Berry/cache/@swc-react-dialog-npm-1.6.0-b66f989f43-10c0.zip/node_modules/@swc-react/dialog/",\
+        "packageDependencies": [\
+          ["@swc-react/dialog", "npm:1.6.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0", {\
+        "packageLocation": "./.yarn/__virtual__/@swc-react-dialog-virtual-3f8e2971e3/3/Users/dmcke/AppData/Local/Yarn/Berry/cache/@swc-react-dialog-npm-1.6.0-b66f989f43-10c0.zip/node_modules/@swc-react/dialog/",\
+        "packageDependencies": [\
+          ["@lit/react", "virtual:fcf811476c93793fe66f51e9f0fbca3d2b3da91a21ed14cd055b47bdbc6807fdd8140f2f049ccfb275c1af8c34af3c2f2500086de228318b3648bc4dd5747107#npm:1.0.7"],\
+          ["@spectrum-web-components/dialog", "npm:0.37.0"],\
+          ["@swc-react/dialog", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@types/next", null],\
+          ["next", null]\
+        ],\
+        "packagePeers": [\
+          "@types/next",\
+          "next"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@swc-react/divider", [\
       ["npm:1.6.0", {\
         "packageLocation": "../../Users/dmcke/AppData/Local/Yarn/Berry/cache/@swc-react-divider-npm-1.6.0-224cf55818-10c0.zip/node_modules/@swc-react/divider/",\
@@ -6152,6 +6180,54 @@ const RAW_RUNTIME_STATE =
           ["@lit/react", "virtual:fcf811476c93793fe66f51e9f0fbca3d2b3da91a21ed14cd055b47bdbc6807fdd8140f2f049ccfb275c1af8c34af3c2f2500086de228318b3648bc4dd5747107#npm:1.0.7"],\
           ["@spectrum-web-components/icons-workflow", "npm:0.37.0"],\
           ["@swc-react/icons-workflow", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@types/next", null],\
+          ["next", null]\
+        ],\
+        "packagePeers": [\
+          "@types/next",\
+          "next"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@swc-react/overlay", [\
+      ["npm:1.6.0", {\
+        "packageLocation": "../../Users/dmcke/AppData/Local/Yarn/Berry/cache/@swc-react-overlay-npm-1.6.0-7d704e55c4-10c0.zip/node_modules/@swc-react/overlay/",\
+        "packageDependencies": [\
+          ["@swc-react/overlay", "npm:1.6.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0", {\
+        "packageLocation": "./.yarn/__virtual__/@swc-react-overlay-virtual-1ad10774cf/3/Users/dmcke/AppData/Local/Yarn/Berry/cache/@swc-react-overlay-npm-1.6.0-7d704e55c4-10c0.zip/node_modules/@swc-react/overlay/",\
+        "packageDependencies": [\
+          ["@lit/react", "virtual:fcf811476c93793fe66f51e9f0fbca3d2b3da91a21ed14cd055b47bdbc6807fdd8140f2f049ccfb275c1af8c34af3c2f2500086de228318b3648bc4dd5747107#npm:1.0.7"],\
+          ["@spectrum-web-components/overlay", "npm:0.37.0"],\
+          ["@swc-react/overlay", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@types/next", null],\
+          ["next", null]\
+        ],\
+        "packagePeers": [\
+          "@types/next",\
+          "next"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@swc-react/popover", [\
+      ["npm:1.6.0", {\
+        "packageLocation": "../../Users/dmcke/AppData/Local/Yarn/Berry/cache/@swc-react-popover-npm-1.6.0-d9ecb41286-10c0.zip/node_modules/@swc-react/popover/",\
+        "packageDependencies": [\
+          ["@swc-react/popover", "npm:1.6.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0", {\
+        "packageLocation": "./.yarn/__virtual__/@swc-react-popover-virtual-76ef597c70/3/Users/dmcke/AppData/Local/Yarn/Berry/cache/@swc-react-popover-npm-1.6.0-d9ecb41286-10c0.zip/node_modules/@swc-react/popover/",\
+        "packageDependencies": [\
+          ["@lit/react", "virtual:fcf811476c93793fe66f51e9f0fbca3d2b3da91a21ed14cd055b47bdbc6807fdd8140f2f049ccfb275c1af8c34af3c2f2500086de228318b3648bc4dd5747107#npm:1.0.7"],\
+          ["@spectrum-web-components/popover", "npm:0.37.0"],\
+          ["@swc-react/popover", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@types/next", null],\
           ["next", null]\
         ],\
@@ -20405,11 +20481,14 @@ const RAW_RUNTIME_STATE =
           ["@swc-react/button", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/button-group", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/checkbox", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@swc-react/dialog", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/divider", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/field-group", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/field-label", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/icon", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/icons-workflow", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@swc-react/overlay", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
+          ["@swc-react/popover", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/sidenav", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/switch", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
           ["@swc-react/tags", "virtual:9134aeb4d884d4306443eccd29337b8da147a2f86894c7f927bebb16f76531a81f7e1318a736d7f93cdc0e120a62a775fc1b9fd6cf8980cac56afd29b7fccaa5#npm:1.6.0"],\
@@ -20425,6 +20504,7 @@ const RAW_RUNTIME_STATE =
           ["@swc-uxp-wrappers/divider", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/field-group", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/field-label", "npm:2.0.0"],\
+          ["@swc-uxp-wrappers/help-text", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/overlay", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/popover", "npm:2.0.0"],\
           ["@swc-uxp-wrappers/sidenav", "npm:2.0.0"],\

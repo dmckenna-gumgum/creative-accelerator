@@ -15,8 +15,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-duplicate.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-education.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-device-phone.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-device-desktop.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow500.js';
 import { Theme } from '@swc-react/theme';
 import { ButtonGroup } from '@swc-react/button-group';
+import { OverlayTrigger } from '@swc-react/overlay';
+import { DialogBase } from '@swc-react/dialog';
 
 //React
 import React, { useState, useEffect, useRef, useContext, Fragment } from "react";
@@ -30,8 +33,6 @@ import Builder from "./Builder.js";
 import Production from "./Production.js";
 import BulkActionBar from "./BulkActionBar.js";
 import { getCreativeConfig } from "../constants/creativeConfigs.js";
-import { pluginReducer } from '../reducers/pluginReducer.js';
-import { initialState } from '../constants/plugin.js';
 import { logInitData, addDebugListeners } from '../utilities/utilities.js';
 
 //Photoshop Stuff
@@ -106,6 +107,10 @@ function Plugin() {
                     type: 'SET_CREATIVE_CONFIG',
                     payload: creativeConfig
                 });
+                dispatch({
+                    type: 'SET_BUILD_STEP',
+                    payload: 0
+                });
                 eventDebug && addDebugListeners();
                 initialized.current = true;
             }
@@ -145,6 +150,10 @@ function Plugin() {
                         <BulkActionBar />
                     </SelectionProvider>
                 )}
+                <OverlayTrigger placement="bottom">
+                    <DialogBase underlay className="dialog-container">
+                    </DialogBase>
+                </OverlayTrigger>
             </div>
         </Theme>
     );

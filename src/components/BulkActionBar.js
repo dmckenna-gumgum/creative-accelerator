@@ -9,8 +9,10 @@ import { useSelection } from '../hooks/useSelection.js';
 
 import { ActionButton } from '@swc-react/action-button';
 import { ActionBar } from '@swc-react/action-bar';
+import { usePhotoshopActions } from '../hooks/usePhotoshopActions.js';
 
 const BulkActionBar = memo(function BulkActionBar() {
+    const { linkSelectedLayers, unlinkSelectedLayers, scaleSelectedLayers, rotateSelectedLayers } = usePhotoshopActions();
     const currentSelection = useSelection();
     let feedbackMessage;
     let actionBarClasses;
@@ -35,36 +37,22 @@ const BulkActionBar = memo(function BulkActionBar() {
         }
     }
 
-    /*
-    // Handle link button click
-    const handleLinkClick = async () => {
-    };
-
-    // Handle unlink button click
-    const handleUnlinkClick = async () => {
-    };
-
-    // Toggle auto-link feature
-    const toggleAutoLink = async () => {
-    };
-    */
-
     return (
         <ActionBar id="action-bar" open={isOpen} className={`plugin-action-bar ${actionBarClasses}`}>
             <p id="feedback" className="plugin-action-bar-feedback" dangerouslySetInnerHTML={{ __html: feedbackMessage }}></p>
-            <ActionButton slot="buttons" id="btnLink" className="action-bar-btn --layers" label="Link">
+            <ActionButton slot="buttons" id="btnLink" className="action-bar-btn --layers" label="Link" onClick={linkSelectedLayers}>
                 <sp-icon-link slot="icon"></sp-icon-link>
                 Link
             </ActionButton>
-            <ActionButton slot="buttons" id="btnUnlink" className="action-bar-btn --layers" label="Unlink">
+            <ActionButton slot="buttons" id="btnUnlink" className="action-bar-btn --layers" label="Unlink" onClick={unlinkSelectedLayers}>
                 <sp-icon-unlink slot="icon"></sp-icon-unlink>
                 Unlink
             </ActionButton>
-            <ActionButton slot="buttons" id="btnScale" className="action-bar-btn --layers" label="Scale">
+            <ActionButton slot="buttons" id="btnScale" className="action-bar-btn --layers" label="Scale" onClick={scaleSelectedLayers}>
                 <sp-icon-maximize slot="icon"></sp-icon-maximize>
                 Scale
             </ActionButton>
-            <ActionButton slot="buttons" id="btnRotate" className="action-bar-btn --layers" label="Rotate">
+            <ActionButton slot="buttons" id="btnRotate" className="action-bar-btn --layers" label="Rotate" onClick={rotateSelectedLayers}>
                 <sp-icon-rotate-c-w slot="icon"></sp-icon-rotate-c-w>
                 Rotate
             </ActionButton>
