@@ -182,20 +182,13 @@ function escapeRegex(s) {
  * @returns {RegExp} - Regular expression that matches strings matching the active filters
  */
 function buildScopeRegex(scopeFilters) {
-    // only keep filters that are truthy/active
-    const active = scopeFilters.filter(f =>
-        f.active === undefined     // no active flag means include
-        || f.active === true        // boolean true
-        || f.active === 'true'      // string "true"
-    );
-
     const byType = {
-        state: active
+        state: scopeFilters
             .filter(f => f.type === 'state')
-            .map(f => escapeRegex(f.filter)),
-        device: active
+            .map(f => escapeRegex(f.value)),
+        device: scopeFilters
             .filter(f => f.type === 'device')
-            .map(f => escapeRegex(f.filter))
+            .map(f => escapeRegex(f.value))
     };
 
     const lookaheads = [];
@@ -276,25 +269,26 @@ function mergeArraysByKey(sourceArray, payloadArray, key) {
  * @param {string} theme - Current Photoshop theme
  */
 function logInitData(state) {
+    const diagnostics = state.diagnostics;
     try {
         // console.clear();
         console.info("----------------------------------------------------------");
         console.log("----------------------------------------------------------");
         console.log('\n');
         console.log(`%cPLUGIN INFO`, 'font-weight: bolder; font-size: 16px;');
-        console.log(`Loaded: ${state.plugin.id}`);
-        console.log(`Version: ${state.plugin.version}`);
-        console.log(`UXP Version: ${state.version.uxp}`);
+        console.log(`Loaded: ${diagnostics.plugin.id}`);
+        console.log(`Version: ${diagnostics.plugin.version}`);
+        console.log(`UXP Version: ${diagnostics.version.uxp}`);
         console.log('\n');
         console.log(`%cAPPLICATION INFO`, 'font-weight: bolder; font-size: 16px;');
-        console.log(`Requires Min ${state.host.name} Version: ${state.plugin.host.minVersion}`);
-        console.log(`User Running ${state.host.name} Version: ${state.host.version}`);
+        console.log(`Requires Min ${diagnostics.host.name} Version: ${diagnostics.plugin.host.minVersion}`);
+        console.log(`User Running ${diagnostics.host.name} Version: ${diagnostics.host.version}`);
         // console.log(`Current Theme: ${capitalizeFirstLetter(theme)}`);
-        console.log(`On Platform: ${state.version.os === 'win32' ? 'Windows' : 'Mac'} ${state.version.arch}`);
+        console.log(`On Platform: ${diagnostics.version.os === 'win32' ? 'Windows' : 'Mac'} ${diagnostics.version.arch}`);
         console.log('\n');
         console.log(`%cDOCUMENT INFO`, 'font-weight: bolder; font-size: 16px;');
-        console.log(`Active Document: ${state.file.fileName}`);
-        console.log(`Active Document Path: ${state.file.filePath}`);
+        console.log(`Active Document: ${diagnostics.file.fileName}`);
+        console.log(`Active Document Path: ${diagnostics.file.filePath}`);
         console.log('\n');
         console.log("----------------------------------------------------------");
         console.log("----------------------------------------------------------");

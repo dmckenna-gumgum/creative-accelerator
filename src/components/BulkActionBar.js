@@ -4,12 +4,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-link.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-unlink.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-maximize.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rotate-c-w.js';
-import { ActionButton } from '@swc-react/action-button';
-import { ActionBar } from '@swc-react/action-bar';
-
-
 import React, { memo } from 'react';
 import { useSelection } from '../hooks/useSelection.js';
+
+import { ActionButton } from '@swc-react/action-button';
+import { ActionBar } from '@swc-react/action-bar';
 
 const BulkActionBar = memo(function BulkActionBar() {
     const currentSelection = useSelection();

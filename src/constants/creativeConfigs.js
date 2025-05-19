@@ -4,7 +4,8 @@ const creativeConfigs = [
     devices: {
       desktop: {
         device: 'desktop',
-        abbreviation: 'dt',
+        abbreviation: ':dt',
+        filter: ':dt',
         dimensions: {
           height: 450,
           width: 1920
@@ -14,15 +15,17 @@ const creativeConfigs = [
           intro: {
             device: 'desktop',
             name: 'intro',
-            abbreviation: 'dt',
-            artboards: [],   ///artboard schema: {step: int, board: Layer, id: board.id int}
+            abbreviation: ':dt',
+            filter: "intro-",
+            artboards: [],   ///artboard schema: {step: mirrors array index (int), board: Layer (object), id: board.id (int)}
             maxSteps: 2,
             artboardNamePattern: 'intro-${step}-panel:dt',
           },
           expanded: {
             device: 'desktop',
             name: 'expanded',
-            abbreviation: 'dt',
+            abbreviation: ':dt',
+            filter: "-expanded",
             artboards: [],
             maxSteps: 3,
             artboardNamePattern: 'morph-${step}-expanded-panel:dt',
@@ -30,7 +33,8 @@ const creativeConfigs = [
           collapsed: {
             device: 'desktop',
             name: 'collapsed',
-            abbreviation: 'dt',
+            abbreviation: ':dt',
+            filter: "-collapsed",
             artboards: [],
             maxSteps: 3,
             artboardNamePattern: 'morph-${step}-collapsed-panel:dt',
@@ -39,7 +43,8 @@ const creativeConfigs = [
       },
       mobile: {
         device: 'mobile',
-        abbreviation: 'mb',
+        abbreviation: ':mb',
+        filter: ':mb',
         dimensions: {
           height: 450,
           width: 860
@@ -48,7 +53,8 @@ const creativeConfigs = [
           intro: {
             device: 'mobile',
             name: 'intro',
-            abbreviation: 'mb',
+            abbreviation: ':mb',
+            filter: "intro-",
             artboards: [],
             maxSteps: 100,
             artboardNamePattern: 'intro-${step}-panel:mb',
@@ -56,7 +62,8 @@ const creativeConfigs = [
           expanded: {
             device: 'mobile',
             name: 'expanded',
-            abbreviation: 'mb',
+            abbreviation: ':mb',
+            filter: "-expanded",
             artboards: [],
             maxSteps: 3,
             artboardNamePattern: 'morph-${step}-expanded-panel:mb',
@@ -64,7 +71,8 @@ const creativeConfigs = [
           collapsed: {
             device: 'mobile',
             name: 'collapsed',
-            abbreviation: 'mb',
+            abbreviation: ':mb',
+            filter: "-collapsed",
             artboards: [],
             maxSteps: 3,
             artboardNamePattern: 'morph-${step}-collapsed-panel:mb',

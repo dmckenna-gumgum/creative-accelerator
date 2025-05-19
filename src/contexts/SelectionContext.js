@@ -119,7 +119,7 @@ export function SelectionProvider({ children }) {
 
     useEffect(() => {
         if (state.currentSection !== 'editor') {
-            console.log('(SelectionContext) Not in editor section, skipping selection setup');
+            // console.log('(SelectionContext) Not in editor section, skipping selection setup');
             // Make sure polling is stopped when not in editor
             stopSelectionPolling();
             return;

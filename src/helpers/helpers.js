@@ -69,25 +69,7 @@ function findValidGroups(potentialGroups, sourceContainer, nameFilters = []) {
         if (group.kind !== LayerKind.GROUP) return acc;
 
         const isNotSource = sourceContainer === null || group.id !== sourceContainer.id;
-        let matchesFilter = false;
-        if (Array.isArray(nameFilters)) {
-            // console.log("(findAllGroups) Testing array:", nameFilters, 'against', group.name);
-            ////legacy search using array of strings.
-            ////this will eventually need AND/OR logic to handle multiple filters
-            matchesFilter = (
-                nameFilters.length === 0 ||
-                nameFilters.some((filter) => {
-                    //console.log(`(findAllGroups) Comparing: ${group.name} against ${filter}`);
-                    return group.name?.includes(filter) || group.name === filter;
-                })
-            );
-            //log(`(findAllGroups) Group: ${group.name}, isNotSource: ${isNotSource}, matchesFilter: ${matchesFilter}`);
-        } else {
-            ////Updated version testing a regex expression. Will eventually transition everything to this but i don't want
-            ////to break a bunch of shit in the meantime. 
-            // console.log("(findAllGroups) Testing regex:", nameFilters, 'against', group.name);
-            matchesFilter = nameFilters.test(group.name);
-        }
+        const matchesFilter = nameFilters.test(group.name);
 
         if (isNotSource && matchesFilter) {
             acc.push(group);

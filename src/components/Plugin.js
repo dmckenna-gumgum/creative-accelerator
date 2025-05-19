@@ -25,7 +25,7 @@ import React, { useState, useEffect, useRef, useContext, Fragment } from "react"
 import { PluginContext } from '../contexts/PluginContext.js';
 import { SelectionProvider } from '../contexts/SelectionContext.js';
 import Nav from './Nav.js';
-import Editor from "./Editor.js";
+import Editor from "./Editor.js"
 import Builder from "./Builder.js";
 import Production from "./Production.js";
 import BulkActionBar from "./BulkActionBar.js";
@@ -39,6 +39,7 @@ const { versions, host, storage } = require('uxp');
 const { arch, platform } = require('os');
 const { app } = require("photoshop");
 const eventDebug = false;
+let initlogged = false;
 
 function getManifestOnLoad(dispatch) {
     useEffect(() => {
@@ -57,22 +58,24 @@ function getManifestOnLoad(dispatch) {
                 dispatch({
                     type: 'FETCH_DATA_SUCCESS',
                     payload: {
-                        plugin: { ...data },
-                        host: {
-                            name: host.name,
-                            version: host.version,
-                            os: currentPlatform,
-                            arch: currentArch
-                        },
-                        version: {
-                            uxp: versions.uxp,
-                            photoshop: versions.photoshop,
-                            os: currentPlatform,
-                            arch: currentArch
-                        },
-                        file: {
-                            fileName: app.activeDocument.name,
-                            filePath: app.activeDocument.path,
+                        diagnostics: {
+                            plugin: { ...data },
+                            host: {
+                                name: host.name,
+                                version: host.version,
+                                os: currentPlatform,
+                                arch: currentArch
+                            },
+                            version: {
+                                uxp: versions.uxp,
+                                photoshop: versions.photoshop,
+                                os: currentPlatform,
+                                arch: currentArch
+                            },
+                            file: {
+                                fileName: app.activeDocument.name,
+                                filePath: app.activeDocument.path,
+                            }
                         }
                     }
                 });
@@ -91,7 +94,7 @@ function getManifestOnLoad(dispatch) {
 function Plugin() {
     const { state, dispatch } = useContext(PluginContext);
     // const [state, dispatch] = useReducer(pluginReducer, initialState);
-    const [creativeState, setCreativeState] = useState(() => getCreativeConfig('velocity'));
+    const creativeConfig = getCreativeConfig('velocity');
     const initialized = useRef(false);
     getManifestOnLoad(dispatch);
 
@@ -99,6 +102,10 @@ function Plugin() {
         useEffect(() => {
             if (isLoaded && !initialized.current) {
                 logInitData(state);
+                dispatch({
+                    type: 'SET_CREATIVE_CONFIG',
+                    payload: creativeConfig
+                });
                 eventDebug && addDebugListeners();
                 initialized.current = true;
             }
@@ -118,12 +125,12 @@ function Plugin() {
                 return <Builder />;
         }
     };
-
+    initialized.current && console.log(state);
     return (
         <Theme theme="spectrum" scale="medium" color="darkest">
             <div className="plugin-container">
                 <div className="plugin-header">
-                    <h2 id="plugin-title" className="plugin-title">Loading...</h2>
+                    <h2 id="plugin-title" className="plugin-title">{state.currentSection.charAt(0).toUpperCase() + state.currentSection.slice(1)}</h2>
                     <div className="plugin-history" id="buildHistory">
                         <span className="plugin-history-label">Revert To Step:</span>
                         <ButtonGroup id="buildHistoryButtons" size="s"></ButtonGroup>

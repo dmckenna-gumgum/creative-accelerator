@@ -1,8 +1,8 @@
 const { app, core } = require('photoshop');
 import { executeBatchPlay } from '../utilities/photoshopActionWrapper.js';
-import { findMatchingLayerNames } from '../helpers/helpers.js';
+import { findMatchingLayerNames, findValidGroups } from '../helpers/helpers.js';
 
-export default async function selectLayersByName(executionContext, selection) {
+export default async function selectLayersByName(executionContext, selection, filter = []) {
 
     const currentlySelectedLayers = selection;
     if (!selection || selection.length === 0) {
@@ -11,9 +11,9 @@ export default async function selectLayersByName(executionContext, selection) {
         return { success: false, message: message };
     }
 
-    const scopeOfSearch = app.activeDocument.layers; ///add filters here
+    const validGroups = findValidGroups(app.activeDocument.layers, null, filter);
     const targetNames = new Set(currentlySelectedLayers.map(layer => layer.name));
-    const matchingLayers = findMatchingLayerNames(scopeOfSearch, targetNames, []);
+    const matchingLayers = findMatchingLayerNames(validGroups, targetNames);
 
     const commands = [
         {
