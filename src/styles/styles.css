@@ -520,8 +520,8 @@ sp-action-bar.mixed-selection .plugin-action-bar-feedback {
 
 .plugin-step-sub-ui {
     flex: 0 1 auto;
-    display: none;
-    pointer-events: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .-show {

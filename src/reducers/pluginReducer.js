@@ -67,19 +67,24 @@ export const pluginReducer = (state, action) => {
                 }
             };
         case 'NEXT_BUILD_STEP':
-            const nextStepNum = Math.min(action.payload + 1, state.builder.steps.length - 1);
+            const nextStepNum = Math.min(action.payload.step + 1, state.builder.steps.length - 1);
             const nextStep = { ...state.builder.steps[nextStepNum] };
             return {
                 ...state,
                 builder: {
                     ...state.builder,
                     currentStepNum: nextStepNum,
-                    currentStep: nextStep
+                    currentStep: nextStep,
+                },
+                creativeConfig: {
+                    ...state.creativeConfig,
+                    ...action.payload.creativeState
                 }
             };
         case 'PREV_BUILD_STEP':
-            const prevStepNum = Math.max(action.payload - 1, 0);
+            const prevStepNum = Math.max(action.payload.step - 1, 0);
             const prevStep = { ...state.builder.steps[prevStepNum] };
+            console.log(`${prevStepNum} prevStep`, prevStep);
             return {
                 ...state,
                 builder: {
@@ -95,6 +100,14 @@ export const pluginReducer = (state, action) => {
                     ...state.builder,
                     currentStepNum: action.payload,
                     currentStep: { ...state.builder.steps[action.payload] }
+                }
+            };
+        case 'UPDATE_CREATIVE_STATE':
+            return {
+                ...state,
+                creativeConfig: {
+                    ...state.creativeConfig,
+                    ...action.payload
                 }
             };
         case 'RESET':

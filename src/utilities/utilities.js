@@ -567,6 +567,33 @@ function sameIdSet(a, b, idKey = 'id') {
     return true; // all checks passed ⇒ same id set
 }
 
+/**
+ * Retrieves all artboards from the given creative state.
+ *
+ * This function extracts artboard details from a hierarchical structure
+ * defined by devices and their sequences within the creative state.
+ *
+ * @param {Object} creativeState - The state containing device configurations with sequences and artboards.
+ * @returns {Array<Object>} - An array of artboard objects, each containing id, name, board, step, deviceName, and sequenceName.
+ */
+const getAllBoardsInState = (creativeState) => {
+    return Object.values(creativeState.devices)
+        .flatMap(device =>
+            Object.values(device.sequences)
+                .flatMap(sequence =>
+                    Object.values(sequence.artboards)
+                        .map(artboard => ({
+                            id: artboard.board.id,
+                            name: artboard.name,
+                            board: artboard.board,
+                            step: artboard.step,
+                            deviceName: device.name,
+                            sequenceName: sequence.name
+                        }))
+                )
+        );
+}
+
 export {
     getEl,
     getEls,
@@ -590,5 +617,6 @@ export {
     diffArraysByIds,
     sameIdSet,
     parsePanelName,
-    addDebugListeners
+    addDebugListeners,
+    getAllBoardsInState
 };

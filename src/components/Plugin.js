@@ -94,7 +94,6 @@ function getManifestOnLoad(dispatch) {
 
 function Plugin() {
     const { state, dispatch } = useContext(PluginContext);
-    // const [state, dispatch] = useReducer(pluginReducer, initialState);
     const creativeConfig = getCreativeConfig('velocity');
     const initialized = useRef(false);
     getManifestOnLoad(dispatch);
@@ -106,10 +105,6 @@ function Plugin() {
                 dispatch({
                     type: 'SET_CREATIVE_CONFIG',
                     payload: creativeConfig
-                });
-                dispatch({
-                    type: 'SET_BUILD_STEP',
-                    payload: 0
                 });
                 eventDebug && addDebugListeners();
                 initialized.current = true;
@@ -130,7 +125,6 @@ function Plugin() {
                 return <Builder />;
         }
     };
-    initialized.current && console.log(state);
     return (
         <Theme theme="spectrum" scale="medium" color="darkest">
             <div className="plugin-container">

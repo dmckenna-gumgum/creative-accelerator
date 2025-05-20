@@ -121,7 +121,7 @@ function findGroupsWithFailures(potentialGroups, sourceContainer, nameFilters = 
                 if (matchesFilter) {
                     result.validGroups.push(group);
                 } else {
-                    result.invalidGroups.push(group);      // ← didn’t match the filter
+                    result.invalidGroups.push(group);
                 }
             }
 
