@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@lit-labs/observers": "^2.0.5",
     "@react-spectrum/provider": "^3.10.4",
     "@spectrum-icons/workflow": "^4.2.20",
@@ -60,10 +61,12 @@
     "@swc-uxp-wrappers/tags": "^2.0.0",
     "@swc-uxp-wrappers/textfield": "^2.0.0",
     "@swc-uxp-wrappers/utils": "*",
+    "gsap": "^3.13.0",
     "lit": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "xmldom": "^0.6.0"
   },
   "resolutions": {
     "@spectrum-web-components/theme": "0.37.0",

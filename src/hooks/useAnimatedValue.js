@@ -1,3 +1,5 @@
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 /**
  * Creates an RAF-driven animation function
  * @param {number} start - Starting value
@@ -10,27 +12,36 @@
 export function animateValue(start, end, duration, onUpdate, onComplete) {
     let startTime = null;
     let animationId = null;
+    gsap.registerPlugin(useGSAP);
 
-    function step(timestamp) {
-        if (!startTime) startTime = timestamp;
 
-        const elapsed = timestamp - startTime;
-        const progress = Math.min(elapsed / duration, 1);
 
-        // Cubic easing out
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const currentValue = start + (end - start) * eased;
+    gsap.to(start, {
+        duration: duration / 1000,
+        value: end,
+        onUpdate: onUpdate,
+        onComplete: onComplete
+    });
+    // function step(timestamp) {
+    //     if (!startTime) startTime = timestamp;
 
-        onUpdate(currentValue);
+    //     const elapsed = timestamp - startTime;
+    //     const progress = Math.min(elapsed / duration, 1);
 
-        if (progress < 1) {
-            animationId = requestAnimationFrame(step);
-        } else if (onComplete) {
-            onComplete();
-        }
-    }
+    //     // Cubic easing out
+    //     const eased = 1 - Math.pow(1 - progress, 3);
+    //     const currentValue = start + (end - start) * eased;
 
-    animationId = requestAnimationFrame(step);
+    //     onUpdate(currentValue);
+
+    //     if (progress < 1) {
+    //         animationId = requestAnimationFrame(step);
+    //     } else if (onComplete) {
+    //         onComplete();
+    //     }
+    // }
+
+    // animationId = requestAnimationFrame(step);
 
     return function cancelAnimation() {
         if (animationId) {

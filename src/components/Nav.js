@@ -2,6 +2,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-magic-wand.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-application-delivery.js';
 
+
 import React, { memo, useContext } from 'react';
 import { SideNav, SideNavItem } from '@swc-react/sidenav';
 import { PluginContext } from '../contexts/PluginContext.js';
@@ -29,6 +30,9 @@ function Nav() {
                 </SideNavItem>
                 <SideNavItem value="production" label="Production">
                     <sp-icon-application-delivery slot="icon"></sp-icon-application-delivery>
+                </SideNavItem>
+                <SideNavItem value="experimental" label="Experimental">
+                    <sp-icon-beaker slot="icon"></sp-icon-beaker>
                 </SideNavItem>
             </SideNav>
         </div>

@@ -41,42 +41,6 @@ function createActionPlans({ buildStep, activeDoc, creativeState, createdBoards 
             }
 
         });
-        /*
-        sourceSequences.forEach(sequenceName => {
-            const sequence = device?.sequences?.[sequenceName];
-            if (!sequence) return;
-
-            //these should be in-state by this step, but just in case, fall back to searching for them in the document.
-            const existingSource = sequence?.artboards?.[sourceStep] != undefined ? sequence?.artboards?.[sourceStep] : false;
-            const sourceName = existingSource ? existingSource.name : replaceStep(sequence.artboardNamePattern, sourceStep);
-            const sourceBoard = existingSource ? existingSource.board : findValidGroups(
-                activeDoc.layers,
-                null,
-                buildArtBoardSearchRegex([sourceName])
-            )[0];
-            if (sourceBoard) {
-                createdBoards.push(sourceBoard);
-                const artboardEntry = {
-                    name: sourceName,
-                    board: sourceBoard,
-                    step: [sourceStep]
-                }
-                const destinationSequence = buildStep.advanceActionScope.destinationSequences.map(sequence => device.sequences[sequence]);
-                const destinationNames = destinationSequence.flatMap(sequence => destinationSteps.map(step => replaceStep(sequence.artboardNamePattern, step)));
-                console.log('destinationNames: ', destinationNames);
-                plans.push({
-                    deviceName,
-                    sequenceName,
-                    source: artboardEntry,
-                    destinationSequences: buildStep.advanceActionScope.destinationSequences,
-                    destinations: destinationNames.map(name => ({ name })),
-                    sequence
-                });
-                //hard coding the index on these because i want them in the same order they're shown visually in photoshop, it will probably matter for something else at some point maybe?
-                // creativeState.devices[deviceName].sequences[sequenceName].artboards.push(artboardEntry);
-            }
-        });
-        */
     });
 
     return plans;
@@ -97,7 +61,6 @@ async function propagateAndDecrementIntro(buildStep, creativeConfig) {
     };
     const actionPlan = createActionPlans(context);
     const result = await executeAllActionPlans(actionPlan, context);
-    console.log('creativeState: ', context.creativeState);
     await centerInViewport(context.createdBoards);
     return {
         success: true,
@@ -121,7 +84,6 @@ async function renamePreviousBoards(sequence) {
 }
 
 async function executeAllActionPlans(actionPlan, context) {
-    console.log('state at time of execution: ', context.creativeState);
     for (const plan of actionPlan) {
         const renamedBoards = await renamePreviousBoards(context.creativeState.devices[plan.deviceName].sequences[plan.sequenceName]);
         for (let i = 0; i < plan.destinationSequences.length; i++) {

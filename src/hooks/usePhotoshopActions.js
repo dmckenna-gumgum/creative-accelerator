@@ -9,10 +9,13 @@ import { PluginContext } from '../contexts/PluginContext.js';
 import linkSelectedLayers from '../actions/linkSelectedLayers.js';
 import transformSelectedLayers from '../actions/transformSelectedLayers.js';
 import { useDialog, useTransformDialog } from '../hooks/useDialog.js';
+import { getKitchenSink } from '../actions/getKitchenSink.js';
+import { captureArtboardState, restoreArtboardState } from '../actions/captureArtboardState.js';
 
 export function usePhotoshopActions() {
     const selection = useSelection();
     const { state } = useContext(PluginContext);
+    const { experimental } = state;
     const { activeFilters } = state.editor;
     const { creativeConfig } = state;
 
@@ -79,6 +82,42 @@ export function usePhotoshopActions() {
         });
         return result;
     }, [selection]);
+
+    const handleGetKitchenSink = useCallback(async (context) => {
+        const result = await executeModalAction("Get Kitchen Sink", async (context) => {
+            return await getKitchenSink(context, selection.layers);
+        });
+        return result;
+    }, [selection]);
+
+    // const handleSetVectorInfo = useCallback(async (context) => {
+    //     const result = await executeModalAction("Set Vector Info", async (context) => {
+    //         return await setVectorInfo(selection.layers);
+    //     });
+    //     return result;
+    // }, [selection]);
+
+    // const handleGetVectorInfo = useCallback(async (context) => {
+    //     const result = await executeModalAction("Get Vector Info", async (context) => {
+    //         return await getVectorInfo(selection.layers, true);
+    //     });
+    //     return result;
+    // }, [selection]);
+
+    const handleCaptureArtboardState = useCallback(async (context) => {
+        const result = await executeModalAction("Capture Artboard State", async (context) => {
+            return await captureArtboardState();
+        });
+        return result;
+    }, []);
+
+    const handleRestoreArtboardState = useCallback(async (context) => {
+        console.log("(handleRestoreArtboardState) Artboard state:", experimental.artboardState);
+        const result = await executeModalAction("Restore Artboard State", async (context) => {
+            return await restoreArtboardState(experimental.artboardState);
+        });
+        return result;
+    }, [experimental]);
 
     const handleScaleSelectedLayers = useCallback(async () => {
         try {
@@ -150,7 +189,10 @@ export function usePhotoshopActions() {
         matchStylesByName: handleMatchStylesByName,
         linkSelectedLayers: handleLinkSelectedLayers,
         unlinkSelectedLayers: handleUnlinkSelectedLayers,
+        getKitchenSink: handleGetKitchenSink,
         scaleSelectedLayers: handleScaleSelectedLayers,
-        rotateSelectedLayers: handleRotateSelectedLayers
+        rotateSelectedLayers: handleRotateSelectedLayers,
+        captureArtboardState: handleCaptureArtboardState,
+        restoreArtboardState: handleRestoreArtboardState,
     };
 }

@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 /**
  * A progress bar component that animates between progress states
@@ -6,52 +8,36 @@ import React, { useEffect } from 'react';
  * @param {number} props.currentStep - The current step index
  * @param {number} props.totalSteps - The total number of steps
  */
+
 export const BuilderProgressBar = ({ currentStep, totalSteps }) => {
-    useEffect(() => {
-        // Get progress bar fill element
-        const fill = document.querySelector('.plugin-progress-bar-fill');
-        if (!fill) return;
+    const progressBar = useRef();
+    const fillRef = useRef();
 
-        // Calculate target percentage
-        const targetWidth = ((currentStep + 1) / totalSteps) * 100;
 
-        // Get current width
-        const currentWidth = parseFloat(fill.style.width || '0');
 
-        // Animation variables
-        let start = null;
-        let rafId = null;
-
-        // Animation function
-        function animate(timestamp) {
-            if (!start) start = timestamp;
-            const elapsed = timestamp - start;
-            const duration = 300;
-            const progress = Math.min(elapsed / duration, 1);
-
-            // Simple easing
-            const value = currentWidth + (targetWidth - currentWidth) * progress;
-
-            // Update width
-            fill.style.width = `${value}%`;
-
-            if (progress < 1) {
-                rafId = requestAnimationFrame(animate);
-            }
-        }
-
-        // Start animation
-        rafId = requestAnimationFrame(animate);
-
-        // Cleanup
-        return () => {
-            if (rafId) cancelAnimationFrame(rafId);
+    useGSAP(() => {
+        const fill = fillRef.current;
+        if (!fill || totalSteps <= 0) return;
+        const currentScale = {
+            value: parseFloat(((currentStep) / totalSteps).toFixed(5))
         };
+        const targetScale = {
+            value: parseFloat(((currentStep + 1) / totalSteps).toFixed(5))
+        };
+        gsap.to(currentScale, {
+            value: targetScale.value,
+            duration: 0.6,
+            onUpdate: () => {
+                fill.style.transform = `scaleX(${currentScale.value})`;
+            },
+            ease: "circ.inOut",
+        });
+
     }, [currentStep, totalSteps]);
 
     return (
-        <div className="plugin-progress-bar">
-            <div className="plugin-progress-bar-fill" style={{ width: '0%' }}></div>
+        <div ref={progressBar} className="plugin-progress-bar">
+            <div ref={fillRef} className="plugin-progress-bar-fill"></div>
         </div>
     );
 };

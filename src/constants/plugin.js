@@ -2,7 +2,7 @@ import buildStepConfig from "./buildSteps.js"
 const defaultBuildStep = 0;
 
 const initialState = {
-    currentSection: "builder",
+    currentSection: "experimental", //"editor", "builder", "experimental", eventually..."production"
     appState: 'unloaded', // 'unloaded', 'loading', 'loaded', 'error'
     errorMessage: '',
     creativeConfig: null, // Will store the currently loaded creative config at top level
@@ -26,6 +26,9 @@ const initialState = {
 
     },
     production: {},
+    experimental: {
+        artboardState: null
+    },
     diagnostics: {}
 }
 

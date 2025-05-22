@@ -15,6 +15,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-duplicate.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-education.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-device-phone.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-device-desktop.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-beaker.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow500.js';
 import { Theme } from '@swc-react/theme';
 import { ButtonGroup } from '@swc-react/button-group';
@@ -31,6 +32,7 @@ import Nav from './Nav.js';
 import Editor from "./Editor.js"
 import Builder from "./Builder.js";
 import Production from "./Production.js";
+import Experimental from "./Experimental.js";
 import BulkActionBar from "./BulkActionBar.js";
 import { getCreativeConfig } from "../constants/creativeConfigs.js";
 import { logInitData, addDebugListeners } from '../utilities/utilities.js';
@@ -121,6 +123,8 @@ function Plugin() {
                 return <Editor />;
             case 'production':
                 return <Production />;
+            case 'experimental':
+                return <Experimental />;
             default:
                 return <Builder />;
         }

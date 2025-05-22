@@ -110,6 +110,15 @@ export const pluginReducer = (state, action) => {
                     ...action.payload
                 }
             };
+        case 'SET_ARTBOARD_STATE':
+            console.log("(SET_ARTBOARD_STATE) Artboard state:", action.payload);
+            return {
+                ...state,
+                experimental: {
+                    ...state.experimental,
+                    artboardState: action.payload
+                }
+            };
         case 'RESET':
             return defaultState;
         default:
