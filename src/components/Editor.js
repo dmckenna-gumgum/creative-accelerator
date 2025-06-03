@@ -16,7 +16,7 @@ function Editor() {
     const { creativeConfig } = state;
     const { activeFilters, autoLinkEnabled } = state.editor;
     const { toggleAutoLink, processSelectionChange } = useAutoLink();
-    const { selectLayersByName, propagateAsset, propagateMissing, matchStylesByName, getKitchenSink, getVectorInfo, setVectorInfo } = usePhotoshopActions();
+    const { selectLayersByName, propagateAsset, propagateMissing, matchStylesByName, selectAllLayers, getKitchenSink, getVectorInfo, setVectorInfo } = usePhotoshopActions();
     // console.log('editor using current selection', currentSelection);
 
     useEffect(() => {
@@ -103,24 +103,24 @@ function Editor() {
     };
 
     // Generate filter note text based on active filters
-    const getFilterNote = () => {
-        if (!activeFilters || activeFilters.length === 0) {
-            return "Edits are currently unrestricted";
-        }
+    // const getFilterNote = () => {
+    //     if (!activeFilters || activeFilters.length === 0) {
+    //         return "Edits are currently unrestricted";
+    //     }
 
-        const deviceFilters = activeFilters.filter(f => f.type === 'device');
-        const stateFilters = activeFilters.filter(f => f.type === 'state');
+    //     const deviceFilters = activeFilters.filter(f => f.type === 'device');
+    //     const stateFilters = activeFilters.filter(f => f.type === 'state');
 
-        const deviceText = deviceFilters.length > 0
-            ? `Device: ${deviceFilters.map(f => f.name).join(', ')}`
-            : '';
+    //     const deviceText = deviceFilters.length > 0
+    //         ? `Device: ${deviceFilters.map(f => f.name).join(', ')}`
+    //         : '';
 
-        const stateText = stateFilters.length > 0
-            ? `State: ${stateFilters.map(f => f.name).join(', ')}`
-            : '';
+    //     const stateText = stateFilters.length > 0
+    //         ? `State: ${stateFilters.map(f => f.name).join(', ')}`
+    //         : '';
 
-        return [deviceText, stateText].filter(t => t !== '').join(' | ');
-    };
+    //     return [deviceText, stateText].filter(t => t !== '').join(' | ');
+    // };
 
     return (
         <div className="plugin-content plugin-flex plugin-flex--column" data-active-menu="editor">
@@ -144,9 +144,9 @@ function Editor() {
                                 {renderDeviceFilters()}
                             </Tags>
                         </div>
-                        <small id="filterNote" className="plugin-filter-note plugin-filter--pillnote">
+                        {/* <small id="filterNote" className="plugin-filter-note plugin-filter--pillnote">
                             {getFilterNote()}
-                        </small>
+                        </small> */}
                     </div>
                 </div>
                 <div className="plugin-menu-section" style={{ minWidth: '250px' }}>
@@ -163,7 +163,7 @@ function Editor() {
                                 Select Layers by Name
                             </ActionButton>
                             <ActionButton emphasized static="secondary" treatment="outline"
-                                id="btnSelectAll">
+                                id="btnSelectAll" onClick={selectAllLayers}>
                                 <sp-icon-layers slot="icon"></sp-icon-layers>
                                 Select All Layers
                             </ActionButton>

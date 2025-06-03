@@ -83,6 +83,16 @@ export function SelectionProvider({ children }) {
         startSelectionPolling();
     }, [state.currentSelection]);
 
+    const forceSelectionCheck = useCallback(async () => {
+        try {
+            const layers = app.activeDocument?.activeLayers || [];
+            await processSelection(layers);
+        } catch (error) {
+            console.error("Error during forced selection check:", error);
+            setNoSelection();
+        }
+    }, [processSelection]);
+
     const setNoSelection = () => {
         dispatch({
             type: 'SET_SELECTION',
@@ -148,9 +158,10 @@ export function SelectionProvider({ children }) {
     const contextValue = useMemo(
         () => ({
             selection: state.currentSelection,
-            setSelection
+            setSelection,
+            forceSelectionCheck
         }),
-        [state.currentSelection, setSelection]
+        [state.currentSelection, setSelection, forceSelectionCheck]
     );
 
     return (

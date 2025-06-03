@@ -1,5 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { useSelection } from './useSelection.js';
+import { SelectionContext } from '../contexts/SelectionContext.js';
 import { executeModalAction } from '../utilities/photoshopActionWrapper.js';
 import { buildScopeRegex } from '../utilities/utilities.js';
 import selectLayersByName from '../actions/selectLayersByName.js';
@@ -8,6 +9,7 @@ import matchStylesByName from '../actions/matchStylesByName.js';
 import { PluginContext } from '../contexts/PluginContext.js';
 import linkSelectedLayers from '../actions/linkSelectedLayers.js';
 import transformSelectedLayers from '../actions/transformSelectedLayers.js';
+import selectAllLayers from '../actions/selectAllLayers.js';
 import { useDialog, useTransformDialog } from '../hooks/useDialog.js';
 import { getKitchenSink } from '../actions/getKitchenSink.js';
 import { captureArtboardState, restoreArtboardState } from '../actions/captureArtboardState.js';
@@ -18,7 +20,7 @@ export function usePhotoshopActions() {
     const { experimental } = state;
     const { activeFilters } = state.editor;
     const { creativeConfig } = state;
-
+    const { forceSelectionCheck } = useContext(SelectionContext);
     // Get dialog-related hooks
     const { showTransformDialog } = useTransformDialog();
 
@@ -40,6 +42,16 @@ export function usePhotoshopActions() {
             console.error('Error selecting layers by name:', error);
             throw error;
         }
+    }, [selection, getFilterRegex]);
+
+    const handleSelectAllLayers = useCallback(async (context) => {
+        const filterRegex = await getFilterRegex();
+        console.log('filter regex', filterRegex);
+        const result = await executeModalAction("Select All Layers", async (context) => {
+            return await selectAllLayers(context, selection.layers, filterRegex);
+        });
+        forceSelectionCheck();
+        return result;
     }, [selection, getFilterRegex]);
 
     const handlePropagateAsset = useCallback(async (context) => {
@@ -194,5 +206,6 @@ export function usePhotoshopActions() {
         rotateSelectedLayers: handleRotateSelectedLayers,
         captureArtboardState: handleCaptureArtboardState,
         restoreArtboardState: handleRestoreArtboardState,
+        selectAllLayers: handleSelectAllLayers,
     };
 }

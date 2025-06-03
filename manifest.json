@@ -11,6 +11,40 @@
     {
       "type": "panel",
       "id": "creative-accelerator-panel",
+      "icons": [
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/pluginIcon.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "dark",
+            "darkest"
+          ],
+          "species": [
+            "generic"
+          ]
+        },
+        {
+          "width": 23,
+          "height": 23,
+          "path": "icons/pluginIcon.png",
+          "scale": [
+            1,
+            2
+          ],
+          "theme": [
+            "lightest",
+            "light"
+          ],
+          "species": [
+            "generic"
+          ]
+        }
+      ],
       "label": {
         "default": "Creative Accelerator"
       },
@@ -29,37 +63,51 @@
       "preferredFloatingSize": {
         "width": 1200,
         "height": 300
-      },
-      "icons": [
-        {
-          "width": 23,
-          "height": 23,
-          "path": "assets/icon-light.png",
-          "scale": [
-            1,
-            2
-          ],
-          "theme": [
-            "light",
-            "darkest"
-          ]
-        },
-        {
-          "width": 23,
-          "height": 23,
-          "path": "assets/icon-dark.png",
-          "scale": [
-            1,
-            2
-          ],
-          "theme": [
-            "dark",
-            "lightest"
-          ]
-        }
+      }
+    }
+  ],
+  "icons": [
+    {
+      "width": 23,
+      "height": 23,
+      "path": "icons/pluginIcon.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "dark",
+        "darkest"
+      ],
+      "species": [
+        "generic"
+      ]
+    },
+    {
+      "width": 23,
+      "height": 23,
+      "path": "icons/pluginIcon.png",
+      "scale": [
+        1,
+        2
+      ],
+      "theme": [
+        "lightest",
+        "light"
+      ],
+      "species": [
+        "generic"
       ]
     }
   ],
+  "requiredPermissions": {
+    "localFileSystem": "request",
+    "network": {
+      "domains": [
+        "https://*"
+      ]
+    }
+  },
   "host": {
     "app": "PS",
     "minVersion": "24.4.0"

@@ -15,11 +15,8 @@ import { PluginContext } from '../contexts/PluginContext.js';
 function Experimental() {
     const currentSelection = useSelection();
     const { state, dispatch } = useContext(PluginContext);
-    const { creativeConfig } = state;
-    const { activeFilters, autoLinkEnabled } = state.editor;
-    const { toggleAutoLink, processSelectionChange } = useAutoLink();
-    const { captureArtboardState, restoreArtboardState, getKitchenSink, getVectorInfo, setVectorInfo } = usePhotoshopActions();
-    // console.log('editor using current selection', currentSelection);
+    const { artboardState } = state.experimental;
+    const { captureArtboardState, restoreArtboardState, getKitchenSink } = usePhotoshopActions();
 
     const handleSaveState = async () => {
         const savedState = await captureArtboardState();
