@@ -13,6 +13,7 @@ import selectAllLayers from '../actions/selectAllLayers.js';
 import { useDialog, useTransformDialog } from '../hooks/useDialog.js';
 import { getKitchenSink } from '../actions/getKitchenSink.js';
 import { captureArtboardState, restoreArtboardState } from '../actions/captureArtboardState.js';
+import fixDuplicateSmartObjects from '../actions/fixDuplicateSmartObjects.js';
 
 export function usePhotoshopActions() {
     const selection = useSelection();
@@ -98,6 +99,16 @@ export function usePhotoshopActions() {
     const handleGetKitchenSink = useCallback(async (context) => {
         const result = await executeModalAction("Get Kitchen Sink", async (context) => {
             return await getKitchenSink(context, selection.layers);
+        });
+        return result;
+    }, [selection]);
+
+    const handleFixDuplicateSmartObjects = useCallback(async (context) => {
+        const filterRegex = await getFilterRegex();
+        console.log('filter regex', filterRegex);
+        console.log("(handleFixDuplicateSmartObjects) Artboard state:", selection.layers);
+        const result = await executeModalAction("Fix Duplicate Smart Objects", async (context) => {
+            return await fixDuplicateSmartObjects(selection.layers, filterRegex);
         });
         return result;
     }, [selection]);
@@ -207,5 +218,6 @@ export function usePhotoshopActions() {
         captureArtboardState: handleCaptureArtboardState,
         restoreArtboardState: handleRestoreArtboardState,
         selectAllLayers: handleSelectAllLayers,
+        fixDuplicateSmartObjects: handleFixDuplicateSmartObjects,
     };
 }

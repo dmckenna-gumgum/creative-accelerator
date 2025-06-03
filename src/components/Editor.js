@@ -16,7 +16,7 @@ function Editor() {
     const { creativeConfig } = state;
     const { activeFilters, autoLinkEnabled } = state.editor;
     const { toggleAutoLink, processSelectionChange } = useAutoLink();
-    const { selectLayersByName, propagateAsset, propagateMissing, matchStylesByName, selectAllLayers, getKitchenSink, getVectorInfo, setVectorInfo } = usePhotoshopActions();
+    const { selectLayersByName, propagateAsset, propagateMissing, matchStylesByName, selectAllLayers, fixDuplicateSmartObjects } = usePhotoshopActions();
     // console.log('editor using current selection', currentSelection);
 
     useEffect(() => {
@@ -188,13 +188,13 @@ function Editor() {
                                 <sp-icon-wrench slot="icon"></sp-icon-wrench>
                                 Match Styles By Name
                             </ActionButton>
-                            <ActionButton emphasized static="secondary" treatment="outline" id="btnFixSmart"
+                            {/* <ActionButton emphasized static="secondary" treatment="outline" id="btnFixSmart"
                                 className="--disabled">
                                 <sp-icon-wrench slot="icon"></sp-icon-wrench>
                                 Replace With Smart Object
-                            </ActionButton>
+                            </ActionButton> */}
                             <ActionButton emphasized static="secondary" treatment="outline"
-                                id="btnFixDuplicate" className="--disabled">
+                                id="btnFixDuplicate" onClick={fixDuplicateSmartObjects}>
                                 <sp-icon-wrench slot="icon"></sp-icon-wrench>
                                 Fix Duplicate Smart Objects
                             </ActionButton>

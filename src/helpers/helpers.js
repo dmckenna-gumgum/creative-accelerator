@@ -177,6 +177,18 @@ function getLayerIndex(layer, sourceLayers) {
     return sourceIndex;
 }
 
+
+/**
+ * Gets the index of a layer based on that layer's parent's layers array
+ * @param {Object} layer - The layer to find
+ * @returns {number} - The index of the layer in the stack, or -1 if not found
+ */
+function getLayerIndexFromParent(layer) {
+    let sourceIndex = layer.parent.layers.findIndex(item => item.id === layer.id);
+    return sourceIndex;
+}
+
+
 /**
  * Duplicates a layer and moves it to the bottom of the target container layer stack
  * @param {Object} sourceLayer - The source layer to duplicate
@@ -640,5 +652,6 @@ export {
     findGroupsWithFailures,
     collectAllLayers,
     getLayersByName,
-    findMatchingLayerNames
+    findMatchingLayerNames,
+    getLayerIndexFromParent
 };
