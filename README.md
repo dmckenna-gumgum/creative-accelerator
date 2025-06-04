@@ -171,10 +171,11 @@ The Creative Accelerator plugin is organized into several key sections, each cat
         ![Selection Features](assets/selection_features.png "Selection Features")
     *   **Layer Linking:** Tools to link layers together for synchronized editing.
     *   **Transformations & Layout:** Efficiently perform transformations and layout adjustments across linked or selected layers/artboards.
+    *   **Layer-Specific Actions:** Quick access to common operations for selected layers.
+        ![Action Bar for Layer Features](assets/layer_features.png "Action Bar - Layer Features")
     *   **Asset Persistence:** Ensure assets (like logos, CTAs) persist correctly across all required artboards.
     *   **Scoped Edits:** Limit the scope of your edits to specific subsets of artboards using filter toggles.
         ![Filter Toggles for Scoped Edits](assets/filters_feature.png "Filter Toggles")
-    *   ***(More detailed explanations of individual Editor features will be added here based on further input/screenshots.)***
 *   **Goal:** Combined, these tools make otherwise very manual and time-consuming operations substantially faster and easier.
 
 The Editor panel becomes particularly powerful when working with multiple selections, enabling rapid changes across your design:
@@ -185,11 +186,11 @@ The Editor panel becomes particularly powerful when working with multiple select
 
 When you select layers or artboards, a contextual action bar appears at the bottom of the plugin, providing quick access to relevant bulk operations:
 
-*   **Layer-Specific Actions:** When layers are selected.
-    ![Action Bar for Layer Features](assets/layer_features.png "Action Bar - Layer Features")
+*   **Basic Actions (Single Artboard):** When layers within the same artboard/group are selected.
+    ![Action Bar for Same Artboard Features](assets/actionBar-same_features.png "Action Bar - Same Artboard Features")
 *   **Artboard-Specific Actions:** When artboards are selected.
     ![Action Bar for Artboard Features](assets/actionBar-board_features.png "Action Bar - Artboard Features")
-*   **Actions for Multiple Selections:** When multiple items are selected across artboards.
+*   **Actions for Multiple Selections (Cross-Artboard):** When multiple items are selected across different artboards.
     ![Action Bar for Multi-Selection Features](assets/actionBar-multi_features.png "Action Bar - Multi-Selection Features")
 *   **Invalid/Mixed Selections:** The action bar also provides feedback if an action is not applicable to the current selection.
     ![Action Bar for Invalid Selection](assets/actionBar-invalid_feature.png "Action Bar - Invalid Selection")
