@@ -73,15 +73,15 @@ This plugin leverages several key Adobe technologies and APIs to provide its fun
 
 Below are some valuable resources for understanding these technologies and for UXP development in general:
 
-*   **UXP Developer Tool:** Essential for loading, debugging, and packaging UXP plugins. ([Link](https://developer.adobe.com/photoshop/uxp/2022/guides/))
-*   **UXP API Documentation:** Core UXP APIs for UI, file system, network, etc. ([Link](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/))
-*   **Photoshop API Reference:** Photoshop-specific UXP APIs for document and layer manipulation. ([Link](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/))
-*   **Spectrum Web Components (SWC):** Adobe's design system implemented as Web Components. ([Link](https://opensource.adobe.com/spectrum-web-components/))
-*   **SWC-UXP-Wrappers:** Library for using SWC within UXP, especially with React. ([Link](https://github.com/adobe/swc-uxp-wrappers))
-*   **BatchPlay:** API for executing low-level Photoshop commands. ([Link](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/media/batchplay/))
-*   **Alchemist Plugin/Workflow:** Tool to discover Action Descriptors for BatchPlay. ([Link](https://github.com/jardicc/alchemist))
-*   **Action Recording in Photoshop:** Built-in feature to record steps, useful for BatchPlay. ([Link](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/media/action-recording/))
-*   **Creative Cloud Developer Forums:** Community forum for UXP and Creative Cloud development. ([Link](https://forums.creativeclouddeveloper.com/))
+*   [**UXP Developer Tool:**](https://developer.adobe.com/photoshop/uxp/2022/guides/) Essential for loading, debugging, and packaging UXP plugins.
+*   [**UXP API Documentation:**](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/) Core UXP APIs for UI, file system, network, etc.
+*   [**Photoshop API Reference:**](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/) Photoshop-specific UXP APIs for document and layer manipulation.
+*   [**Spectrum Web Components (SWC):**](https://opensource.adobe.com/spectrum-web-components/) Adobe's design system implemented as Web Components.
+*   [**SWC-UXP-Wrappers:**](https://github.com/adobe/swc-uxp-wrappers) Library for using SWC within UXP, especially with React.
+*   [**BatchPlay:**](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/media/batchplay/) API for executing low-level Photoshop commands.
+*   [**Alchemist Plugin/Workflow:**](https://github.com/jardicc/alchemist) Tool to discover Action Descriptors for BatchPlay.
+*   [**Action Recording in Photoshop:**](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/media/action-recording/) Built-in feature to record steps, useful for BatchPlay.
+*   [**Creative Cloud Developer Forums:**](https://forums.creativeclouddeveloper.com/) Community forum for UXP and Creative Cloud development.
 
 ## Prerequisites
 
@@ -158,17 +158,41 @@ The Creative Accelerator plugin is organized into several key sections, each cat
 *   **Functionality:** Helps ensure all relevant assets are correctly linked, formatted, and structured in a way that GumGum's Creative Studio tool can interpret.
 *   **Recommendation:** If you're new to this creative process, it's highly recommended to start with the Build Assistant.
 
+![Build Assistant Panel](assets/build_panel.png "Build Assistant Panel")
+
 #### Editor
 
 *   **Purpose:** Provides granular, context-specific tools for experienced designers or those working on revisions and detailed edits.
+
+![Editor Panel](assets/editor_panel.png "Editor Panel Overview")
+
 *   **Key Features:**
     *   **Multi-Artboard Selection:** Shortcuts for selecting matching layers across multiple artboards.
+        ![Selection Features](assets/selection_features.png "Selection Features")
     *   **Layer Linking:** Tools to link layers together for synchronized editing.
     *   **Transformations & Layout:** Efficiently perform transformations and layout adjustments across linked or selected layers/artboards.
     *   **Asset Persistence:** Ensure assets (like logos, CTAs) persist correctly across all required artboards.
     *   **Scoped Edits:** Limit the scope of your edits to specific subsets of artboards using filter toggles.
+        ![Filter Toggles for Scoped Edits](assets/filters_feature.png "Filter Toggles")
     *   ***(More detailed explanations of individual Editor features will be added here based on further input/screenshots.)***
 *   **Goal:** Combined, these tools make otherwise very manual and time-consuming operations substantially faster and easier.
+
+The Editor panel becomes particularly powerful when working with multiple selections, enabling rapid changes across your design:
+
+![Editor Panel with Multi-Selection](assets/editor_panel_multiSelect.png "Editor Panel with Multiple Items Selected")
+
+**Contextual Action Bar:**
+
+When you select layers or artboards, a contextual action bar appears at the bottom of the plugin, providing quick access to relevant bulk operations:
+
+*   **Layer-Specific Actions:** When layers are selected.
+    ![Action Bar for Layer Features](assets/layer_features.png "Action Bar - Layer Features")
+*   **Artboard-Specific Actions:** When artboards are selected.
+    ![Action Bar for Artboard Features](assets/actionBar-board_features.png "Action Bar - Artboard Features")
+*   **Actions for Multiple Selections:** When multiple items are selected across artboards.
+    ![Action Bar for Multi-Selection Features](assets/actionBar-multi_features.png "Action Bar - Multi-Selection Features")
+*   **Invalid/Mixed Selections:** The action bar also provides feedback if an action is not applicable to the current selection.
+    ![Action Bar for Invalid Selection](assets/actionBar-invalid_feature.png "Action Bar - Invalid Selection")
 
 #### Production
 

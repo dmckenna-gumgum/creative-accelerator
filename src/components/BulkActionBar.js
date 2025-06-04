@@ -28,7 +28,7 @@ const BulkActionBar = memo(function BulkActionBar() {
                 actionBarClasses = currentSelection.parentGroupCount.size === 1 ? 'selection-same-groups' : 'selection-many-groups';
                 break;
             case 'mixed':
-                feedbackMessage = `You've currently selected an artboard, or a mix of artboards and layers. Performing bulk actions on artboards is not supported`;
+                feedbackMessage = `You've currently selected a mix of artboards and layers. Performing bulk actions on a combination of both is not supported`;
                 actionBarClasses = 'mixed-selection';
                 break;
             default:
