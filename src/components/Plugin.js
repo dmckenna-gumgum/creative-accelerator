@@ -104,7 +104,7 @@ function Plugin() {
     const currentPhotoshopDocument = useActiveDocumentChange();
 
     useEffect(() => {
-        if (!initialized.current) return;
+        if (!initialized.current || !app.activeDocument) return;
         const newDocName = currentPhotoshopDocument?.name || null;
         const newDocPath = currentPhotoshopDocument?.path || null;
 
@@ -125,7 +125,7 @@ function Plugin() {
 
         // Compare with the document info currently in the global state
         if (newDocName !== storedDocName || newDocPath !== storedDocPath) {
-            console.log(`Plugin: Document context updating. Previous: ${storedDocName || 'none'}, New: ${newDocName || 'none'}`);
+            // console.log(`Plugin: Document context updating. Previous: ${storedDocName || 'none'}, New: ${newDocName || 'none'}`);
             dispatch({
                 type: 'SET_ACTIVE_DOCUMENT',
                 payload: {
@@ -141,7 +141,6 @@ function Plugin() {
                 type: 'CLEAR_ACTIVE_FILTERS',
                 payload: null
             });
-            console.log('updated state', state);
             // Eventually this is where we'll check what sort of file 
             // (eg: Hang Time vs Velocity) we're working with and adjust the UI accordingly
         }

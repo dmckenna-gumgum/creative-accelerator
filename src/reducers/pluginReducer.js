@@ -64,7 +64,6 @@ export const pluginReducer = (state, action) => {
                 }
             };
         case 'CLEAR_ACTIVE_FILTERS':
-            console.log('CLEAR_ACTIVE_FILTERS');
             return {
                 ...state,
                 editor: {
@@ -82,7 +81,6 @@ export const pluginReducer = (state, action) => {
             };
         case 'SET_FILTER_MODE':
             ///what a fucking mess. this is getting taken out asap. 
-            console.log('SET_FILTER_MODE', action.payload);
             return {
                 ...state,
                 filterMode: action.payload,

@@ -301,14 +301,12 @@ function logDocumentChange(state) {
     const diagnostics = state.diagnostics;
     try {
         // console.clear();
-        console.info("----------------------------------------------------------");
         console.log("----------------------------------------------------------");
         console.log('\n');
-        console.log(`%cDOCUMENT INFO`, 'font-weight: bolder; font-size: 16px;');
-        console.log(`Active Document: ${diagnostics.file.fileName}`);
-        console.log(`Active Document Path: ${diagnostics.file.filePath}`);
+        console.log(`%cACTIVE DOCUMENT CHANGED`, 'font-weight: bolder; font-size: 16px;');
+        console.log(`New Active Document: ${diagnostics.file.fileName}`);
+        console.log(`New Active Document Path: ${diagnostics.file.filePath}`);
         console.log('\n');
-        console.log("----------------------------------------------------------");
         console.log("----------------------------------------------------------");
     } catch (error) {
         console.error('Error logging initialization data', error);

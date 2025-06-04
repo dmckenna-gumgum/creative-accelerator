@@ -125,7 +125,7 @@ function Editor() {
     return (
         <div className="plugin-content plugin-flex plugin-flex--column" data-active-menu="editor">
             <div className="plugin-menu" id="editor-menu">
-                <div className="plugin-menu-section plugin-flex--no-grow" style={{ minWidth: '350px' }}>
+                <div className="plugin-menu-section plugin-flex--no-grow" style={{ minWidth: '300px' }}>
                     <h4 className="plugin-label"><span className={activeFilters.length > 0 ? 'plugin-filter-light plugin-filter-light--on' : 'plugin-filter-light plugin-filter-light--off'}></span>{activeFilters.length > 0 ? 'Actions Filters Active' : 'Actions Filters Inactive'}</h4>
                     <div className="plugin-filters">
                         <div className="plugin-filter-cluster">
