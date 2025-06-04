@@ -262,7 +262,7 @@ export default async function fixDuplicateSmartObjects(selectedLayers, filterReg
             // Keep the first one, detach the rest
             const masterSO = soArray[0]; // This one is kept as is, or could also be detached if we want all new
             masterSO.baseName = masterSO.name.replace(/\s+copy\s+\d+\s*$/i, "");
-            masterSOId = masterSO.name = masterSO.layerRef.name = `${masterSO.baseName} || Orphan: 0`;
+            masterSOId = masterSO.name = masterSO.layerRef.name = `${masterSO.baseName} || Instance: 0`;
             console.log(`  Keeping master: ${masterSO.name} (ID: ${masterSO.id})`);
             for (let i = 1; i < soArray.length; i++) {
                 const soToDetach = soArray[i];
@@ -278,7 +278,7 @@ export default async function fixDuplicateSmartObjects(selectedLayers, filterReg
     }
     console.log("Detached Smart Object Mappings from source group:", detachedMappings);
 
-    // Part 2: Propagate changes to other valid groups
+    //Propagate changes to other valid groups
     if (detachedMappings.length === 0) {
         console.log("No smart objects were detached in the source group, so no propagation needed.");
         return { success: true, message: "No shared smart objects found to detach in the source group." };

@@ -1,168 +1,219 @@
-# UXP Plugin with Spectrum Web Component in React context
+# Creative Accelerator
 
-This starter will help you to create a **React** based UXP plugin using Spectrum Web Component (SWC). It includes setting up the project, integrating the SWC components, and mounting it over the host application - Photoshop.
+**A Photoshop UXP plugin to streamline and accelerate the creation of GumGum's proprietary Velocity ad format.**
 
-## Documentation
+This plugin is designed for designers working within Adobe Photoshop to build Velocity ad units. It simplifies the traditionally complex process of managing numerous artboards for different animation keyframes and states, making it easier to create, propagate edits, and ensure compatibility with GumGum's Creative Studio tool.
 
-- [SWC in UXP](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/reference-spectrum/swc)
-- [Adobe's list of SWC](https://opensource.adobe.com/spectrum-web-components/index.html)
+## Table of Contents
 
-## Getting started
+*   [Overview](#overview)
+*   [Core Capabilities](#core-capabilities)
+*   [Tech Stack & Architecture](#tech-stack--architecture)
+*   [Core Technologies & Resources](#core-technologies--resources)
+*   [Prerequisites](#prerequisites)
+*   [Installation (for End Users)](#installation-for-end-users)
+*   [Development Setup](#development-setup)
+*   [Building the Plugin](#building-the-plugin)
+*   [How to Use (User Guide)](#how-to-use-user-guide)
+    *   [Getting Started](#getting-started)
+    *   [Plugin Sections](#plugin-sections)
+        *   [Build Assistant](#build-assistant)
+        *   [Editor](#editor)
+        *   [Production](#production)
+        *   [Experimental](#experimental)
+*   [Project Structure](#project-structure)
+*   [Feedback and Contributions](#feedback-and-contributions)
+*   [License](#license)
 
-**Pre-requisites**
+## Overview
 
-1. [NodeJS](https://nodejs.org/en) (>= v 16.0.0)
-2. [Yarn package manager](https://yarnpkg.com/getting-started/install)
-3. UXP Developer Tool (UDT)
-4. UXP >= 7.2
+The Creative Accelerator addresses the challenges designers face when building GumGum's Velocity ad format in Photoshop. This format often requires managing a large number of artboards to represent various keyframes and interactive states of an ad. This plugin provides tools and workflows to:
 
-**Build and run**
+*   **Accelerate Design:** Significantly reduce the time spent on repetitive tasks.
+*   **Simplify Complexity:** Make it easier to manage and edit content across multiple artboards.
+*   **Ensure Consistency:** Help maintain uniformity in design elements that are shared or propagated.
+*   **Guarantee Compatibility:** Produce artboard structures that are ready for ingestion by GumGum's Creative Studio, which assembles them into the final animated and interactive ad unit.
 
-1. Start by installing the dependencies `yarn install`.
-2. Prepare the bundle using Webpack `yarn build`. You will notice a **dist** folder after this step.
-3. (Optional) `yarn watch` to automatically build the project every time you update a source file and `yarn start` to keep the plugin running and automatically build after every change.
+## Core Capabilities
 
-**Load the plugin into the application via UDT**
+*   **Advanced Artboard Management:** Tools for efficiently creating, duplicating, and organizing artboards representing animation frames and states.
+*   **Smart Layer Linking (`useAutoLink`):** An intelligent system to automatically link or unlink layers across artboards based on selection and defined group structures, respecting active filters.
+*   **Smart Object Handling:** Features to manage and fix duplicated or linked Smart Objects, ensuring instances are unique where needed and changes can be propagated correctly (e.g., `fixDuplicateSmartObjects`).
+*   **Vector Mask Preservation:** Robust handling of vector mask data (`pathContents`), ensuring accurate capture and restoration of vector shapes during layer operations. (Leverages `getVectorInfo` and `restoreLayerState`).
+*   **Efficient Dialog System:** Utilizes native UXP dialog elements for user interactions (e.g., input prompts, confirmations), ensuring compatibility and a smooth user experience within Photoshop.
+*   **Cross-Artboard Editing & Propagation:** Tools to select matching layers across multiple artboards, link them, perform transformations, adjust layouts, and ensure assets persist across all required artboards, with options to filter the scope of these edits.
 
-1. Make sure the application is running and you can see it under 'Connected apps'.
-2. Click on 'Add Plugin' button and select the `manifest.json` of this plugin.
-3. Configure the `dist` folder of your plugin by using 'More' -> 'Advanced' option from the action menu `•••`
-4. Click on the ••• menu on the corresponding plugin row. Select 'Load' to view the plugin inside your application.
-5. (Optional) Select 'Watch' from plugin actions ••• to dynamically load the latest plugin changes. Note that a manifest change would need you to 'Unload' and 'Load' the plugin from scratch.
+## Tech Stack & Architecture
 
-<img width="800" alt="package.json with resolutions block" src="assets/load-plugin-from-developer-tools.png">
+*   **Platform:** Adobe UXP (Unified Extensibility Platform)
+*   **UI Framework:** React v18.2.0
+*   **UI Components:** Adobe Spectrum Web Components (SWC) via `@swc-react` and `@swc-uxp-wrappers`
+*   **Animation (if applicable):** GSAP (`@gsap/react`, `gsap`)
+*   **Build Tool:** Webpack 5
+*   **Package Manager:** Yarn (v4.9.1)
+*   **Language:** JavaScript (ES6 Modules)
 
-<br></br>
+**Architectural Highlights:**
 
-You should be able to see a menu in Photoshop plugin.
+*   **Component-Based UI:** Leverages React for a modular and maintainable user interface.
+*   **Custom Hooks:** Encapsulates complex business logic and state management (e.g., `useAutoLink`).
+*   **UXP Native Integration:** Employs UXP best practices, such as using native dialogs.
+*   **Photoshop Scripting:** Interacts with Photoshop's core functionalities via `executeAsModal` and other UXP APIs.
 
-<img width="350" alt="package.json with resolutions block" src="assets/menu-starter.png">
+## Core Technologies & Resources
 
-## Add a new component
+This plugin leverages several key Adobe technologies and APIs to provide its functionality within Photoshop:
 
-You can use any of the supported components listed in [our docs](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/reference-spectrum/swc) by following these steps:
+*   **UXP (Unified Extensibility Platform):** The foundational framework for building modern plugins for Adobe Creative Cloud applications like Photoshop. UXP enables plugins to be built with web technologies (HTML, CSS, JavaScript) and provides APIs for interacting with the host application and the user interface.
+*   **Photoshop UXP APIs:** These are specific extensions to the UXP core that allow the plugin to interact directly with Photoshop. This includes manipulating documents, layers, artboards, running commands, and responding to Photoshop events.
+*   **Spectrum Web Components (SWC):** The user interface of this plugin is built using Spectrum Web Components, Adobe's open-source implementation of its design system. SWC provides a consistent Adobe look and feel.
+*   **SWC-UXP-Wrappers:** To seamlessly integrate SWC into the UXP environment, especially when using frameworks like React (as this plugin does), `swc-uxp-wrappers` are used. These wrappers adapt the standard web components for optimal use within UXP panels.
+*   **BatchPlay:** For complex or highly specific Photoshop operations that may not have a direct high-level API, BatchPlay is utilized. It allows the execution of Photoshop's internal action descriptors, offering deep control over the application's features.
+*   **Alchemist & Action Recording:** To identify the correct parameters for BatchPlay, developers often use tools like Alchemist or Photoshop's built-in Action Recorder. These help translate UI operations into the code needed for BatchPlay.
 
-1. Use `yarn add` to install the components and its supported version.
+Below are some valuable resources for understanding these technologies and for UXP development in general:
 
-```javascript
-yarn add @swc-uxp-wrappers/link;
-yarn add @swc-react/link@0.14.1-react.3029;
+*   **UXP Developer Tool:** Essential for loading, debugging, and packaging UXP plugins. ([Link](https://developer.adobe.com/photoshop/uxp/2022/guides/))
+*   **UXP API Documentation:** Core UXP APIs for UI, file system, network, etc. ([Link](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/))
+*   **Photoshop API Reference:** Photoshop-specific UXP APIs for document and layer manipulation. ([Link](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/))
+*   **Spectrum Web Components (SWC):** Adobe's design system implemented as Web Components. ([Link](https://opensource.adobe.com/spectrum-web-components/))
+*   **SWC-UXP-Wrappers:** Library for using SWC within UXP, especially with React. ([Link](https://github.com/adobe/swc-uxp-wrappers))
+*   **BatchPlay:** API for executing low-level Photoshop commands. ([Link](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/media/batchplay/))
+*   **Alchemist Plugin/Workflow:** Tool to discover Action Descriptors for BatchPlay. ([Link](https://github.com/jardicc/alchemist))
+*   **Action Recording in Photoshop:** Built-in feature to record steps, useful for BatchPlay. ([Link](https://developer.adobe.com/photoshop/uxp/2022/ps_reference/media/action-recording/))
+*   **Creative Cloud Developer Forums:** Community forum for UXP and Creative Cloud development. ([Link](https://forums.creativeclouddeveloper.com/))
+
+## Prerequisites
+
+*   **Adobe Photoshop:** Version 24.4.0 or newer (as per `manifest.json`).
+*   **Adobe Creative Cloud Desktop Application:** For plugin installation and management.
+*   **(For Developers) Node.js:** Version 16.0.0 or newer (Recommended: Latest LTS).
+*   **(For Developers) Yarn:** Version 1.x (Classic) or newer (project uses Yarn 4.x). [Yarn Installation](https://yarnpkg.com/getting-started/install)
+*   **(For Developers) UXP Developer Tool (UDT):** Required for loading and debugging.
+
+## Installation (for End Users)
+
+1.  **Obtain the Plugin Package:** You will receive a `.ccx` file for the Creative Accelerator plugin.
+2.  **Install the Plugin:**
+    *   Double-click the `.ccx` file.
+    *   The Creative Cloud Desktop application should open and prompt you to install the plugin. Follow the on-screen instructions.
+    *   Alternatively, you can install it through the Creative Cloud Desktop app's "Stock & Marketplace" > "Plugins" > "Manage plugins" section by finding the downloaded `.ccx` file.
+3.  **Enable in Photoshop:**
+    *   Once installed, open Adobe Photoshop.
+    *   The "Creative Accelerator" panel should be available under Photoshop's "Plugins" menu. Click it to open the panel.
+
+## Development Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd studio-accelerator
+    ```
+2.  **Install dependencies:**
+    ```bash
+    yarn install
+    ```
+3.  **Build and Watch:**
+    ```bash
+    yarn watch
+    ```
+    This compiles the plugin into `dist` and re-compiles on file changes.
+4.  **Load into Photoshop via UDT:**
+    *   Open Photoshop and the UXP Developer Tool.
+    *   In UDT, click "Add Plugin..." and select `manifest.json` from the project root.
+    *   Click `•••` (Actions) next to "Creative Accelerator" and select "Load".
+    *   Recommended: Also select "Watch" from the `•••` menu for automatic reloading.
+
+## Building the Plugin
+
+*   **Development Build (with watch mode):**
+    ```bash
+    yarn watch
+    ```
+*   **Production Build (for creating `.ccx` or distribution):**
+    ```bash
+    yarn build
+    ```
+    This creates an optimized build in the `dist` folder.
+*   **Start (One-off build):**
+    ```bash
+    yarn start
+    ```
+
+## How to Use (User Guide)
+
+### Getting Started
+
+*   **Installation:** Follow the [Installation (for End Users)](#installation-for-end-users) guide.
+*   **Docking the Plugin:** Once the plugin panel is open, it's **strongly recommended** to dock it to a convenient location in your Photoshop workspace, such as the bottom of the viewport, for easy access.
+*   **Using Templates:** While the plugin can be used on any Photoshop document, most features are optimized for and will provide the most value when working with GumGum's provided PSD templates for Velocity or Hangtime ad formats. Starting with these templates is highly recommended.
+
+### Plugin Sections
+
+The Creative Accelerator plugin is organized into several key sections, each catering to different stages and needs of the ad creation workflow:
+
+#### Build Assistant
+
+*   **Purpose:** Acts as a wizard to guide new designers (or those new to the Velocity/Hangtime formats) through the creative build process.
+*   **Functionality:** Helps ensure all relevant assets are correctly linked, formatted, and structured in a way that GumGum's Creative Studio tool can interpret.
+*   **Recommendation:** If you're new to this creative process, it's highly recommended to start with the Build Assistant.
+
+#### Editor
+
+*   **Purpose:** Provides granular, context-specific tools for experienced designers or those working on revisions and detailed edits.
+*   **Key Features:**
+    *   **Multi-Artboard Selection:** Shortcuts for selecting matching layers across multiple artboards.
+    *   **Layer Linking:** Tools to link layers together for synchronized editing.
+    *   **Transformations & Layout:** Efficiently perform transformations and layout adjustments across linked or selected layers/artboards.
+    *   **Asset Persistence:** Ensure assets (like logos, CTAs) persist correctly across all required artboards.
+    *   **Scoped Edits:** Limit the scope of your edits to specific subsets of artboards using filter toggles.
+    *   ***(More detailed explanations of individual Editor features will be added here based on further input/screenshots.)***
+*   **Goal:** Combined, these tools make otherwise very manual and time-consuming operations substantially faster and easier.
+
+#### Production
+
+*   **Purpose:** (Work in Progress) This section will ultimately provide tools for finalizing your project for handoff to Creative Studio.
+*   **Future Functionality:** Expect tools for converting assets, normalizing properties, fixing common issues, and generally prepping all artboards and assets to ensure a smooth transition into Studio.
+*   **Current Status:** More to come on this section in the future.
+
+#### Experimental
+
+*   **Purpose:** A space for exploring new capabilities and workflows that could further simplify and evolve the creation of Velocity and Hangtime ad formats.
+*   **Current Status:** Features in this tab are constrained tests and proofs of concept. They are **not recommended** for use in live production workflows at this time but may mature into standard features in the future.
+
+## Project Structure
+
+```
+studio-accelerator/
+├── .git/                # Git version control
+├── .yarn/               # Yarn 2+ PnP files
+├── assets/              # Static assets (e.g., images for README)
+├── dist/                # Bundled plugin files (output of webpack)
+├── icons/               # Plugin icons used in Photoshop UI
+├── src/                 # Source code
+│   ├── actions/         # Photoshop scripting logic, UXP commands (e.g., fixDuplicateSmartObjects.js)
+│   ├── components/      # React components
+│   ├── constants/       # Application-wide constants (e.g., namingConventions.js)
+│   ├── hooks/           # Custom React hooks (e.g., useAutoLink)
+│   ├── utilities/       # Helper functions and utilities (e.g., dialogs.js)
+│   ├── index.html       # HTML entry point for the UXP panel
+│   ├── index.js         # Main JavaScript entry point for React application
+│   └── App.js           # Root React component
+├── .babelrc             # Babel configuration
+├── .gitignore           # Files and folders to ignore for Git
+├── manifest.json        # UXP plugin manifest
+├── package.json         # Project metadata, dependencies, and scripts
+├── webpack.config.js    # Webpack build configuration
+└── yarn.lock            # Yarn lockfile
 ```
 
-**Note:** The UXP-SWC components are delivered via wrappers over specific SWC versions. For example, `@swc-uxp-wrappers/menu` is locked and wrapped on **0.16.9** version of `@spectrum-web-components/menu`. Thereby for React framework we will need to use `@swc-react/menu:0.16.9-react.3029` which is the react-wrapper closest to the SWC component version (0.16.9) in dependency block too. Also, please note that components like `icons`,`icons-workflow`, `icons-ui`, `theme`, `shared` , `base`,`styles` do not use wrappers and therefore must be directly consumed from `@spectrum-web-components` library npm.
+## Feedback and Contributions
 
-<img width="1125" alt="image2023-1-20_18-45-41" src="assets/package.png">
+This tool is very much a work in progress. As you start to utilize this plugin in your everyday work, please expect to encounter bugs and occasional unpredictable behaviors.
 
-2. Register the component in `App.js` file.
+We welcome any input, feedback, and bug reports you can provide.
+*(Suggestion: You might want to add a link here to an issue tracker like GitHub Issues, or an email address for feedback if applicable).*
 
-```javascript
-import { Link } from "@swc-react/link";
-```
+## License
 
-3. Add the component in the same file.
-
-```html
-   This is a <Link href="#">example link</Link>.
-```
-
-4. We need to add alias configuration in the webpack config file. This project contains the configuration already. Notice the `@swc-uxp-wrappers/utils` entry in the package.json. This package delivers the `alias.js` file for all the supported components which is then imported in the `webpack.config.js` file as this.
-
-```
-import { aliases } from '@swc-uxp-wrappers/utils';
-```
-
-5. Run `yarn build` to prepare the distribution bundle.
-   You can also use `yarn watch` to create the bundle as soon as you save your changes to any source files. Use this along with Plugin -> Watch option in UDT to sync with latest changes automatically.
-
-## Deep dive
-
-Now that the plugin is working, let's look into the details.
-
-### webpack.config.js
-
-Webpack is used to bundle the dependencies in the project therefore you would see the webpack.config.js file for basic config.
-
-Notice the installed `@swc-uxp-wrappers/utils` package in the package.json file. It is being used it to provide [aliasing](https://webpack.js.org/configuration/resolve/#resolvealias) via mapping. You can remove this aliasing and use the same plugin on web too.
-
-```
-       resolve: {
-            extensions: ['.js', '.json'],
-            alias: aliases,
-        }
-```
-
-Pro tip: For debugging purposes, add `eval-cheap-source-map` in the webpack.config file to get the source map in UDT debug window.
-
-```javascript
-devtool: "eval-cheap-source-map";
-```
-
-### .babelrc
-
-This is config file for `babel` library to transpile the code, especially the JSX syntax, to match the environment's capabilities.
-
-### package.json
-
-Once you install the component (using `yarn add`) you should see the components added to the 'dependencies'.
-
-### manifest.json
-
-Enable SWC by setting the **enableSWCSupport** flag to true.
-
-```
-"featureFlags": {
-   "enableSWCSupport": true
-}
-```
-
-### src/index.js
-
-This is the entry point of the project.
-
-Ensure that the the components are wrapped with a `Theme` component. It ensures that the Spectrum design tokens are delivered to the scoped HTML context.
-
-```
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <Theme theme="spectrum" scale="medium" color="light">
-      <App />
-    </Theme>
-  </React.StrictMode>
-);
-
-```
-
-### **src/index.html**
-
-Entry point of the HTML structure of React app index.js.
-
-### **src/App.js**
-
-The main React component. This component serves as the root of your component tree. You may also wrap your component with `Theme` here.
-
-```
-function App() {
-  return (
-    <div>
-      <h1>Welcome</h1>
-    <Theme theme="spectrum" scale="medium" color="light">
-        <Menu selects="single">
-          <MenuItem selected>Sample Menu</MenuItem>
-          <MenuDivider></MenuDivider>
-          <MenuItem>Select Option 1</MenuItem>
-          <MenuItem>Select Option 2</MenuItem>
-          <MenuItem>Select Option 3</MenuItem>
-          <MenuItem>Select Option 4</MenuItem>
-          <MenuItem disabled>Disabled Option</MenuItem>
-        </Menu>
-        </Theme>
-        <br />
-        This is an <Link href="#">example link</Link>.
-    </div>
-  );
-}
-
-```
-
-## Recommended `@swc-react` library versions can be referred in the [developer documentation](https://developer.adobe.com/photoshop/uxp/2022/uxp-api/reference-spectrum/swc)
+This project is licensed under the ISC License.
