@@ -1,5 +1,7 @@
 # Creative Accelerator
 
+![Editor Panel with Multi-Selection](assets/editor_panel_multiSelect.png "Editor Panel with Multiple Items Selected")
+
 **A Photoshop UXP plugin to streamline and accelerate the creation of GumGum's proprietary Velocity ad format.**
 
 This plugin is designed for designers working within Adobe Photoshop to build Velocity ad units. It simplifies the traditionally complex process of managing numerous artboards for different animation keyframes and states, making it easier to create, propagate edits, and ensure compatibility with GumGum's Creative Studio tool.
