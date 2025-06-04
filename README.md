@@ -42,6 +42,16 @@ The Creative Accelerator addresses the challenges designers face when building G
 *   **Vector Mask Preservation:** Robust handling of vector mask data (`pathContents`), ensuring accurate capture and restoration of vector shapes during layer operations. (Leverages `getVectorInfo` and `restoreLayerState`).
 *   **Efficient Dialog System:** Utilizes native UXP dialog elements for user interactions (e.g., input prompts, confirmations), ensuring compatibility and a smooth user experience within Photoshop.
 *   **Cross-Artboard Editing & Propagation:** Tools to select matching layers across multiple artboards, link them, perform transformations, adjust layouts, and ensure assets persist across all required artboards, with options to filter the scope of these edits.
+*   **Contextual Action Bar:** A dynamic toolbar that appears at the bottom of the plugin, providing quick access to relevant bulk operations based on the current selection.
+
+## Planned Capabilities
+
+*   **Bulk Smart Object Conversions:** Automations to ensure that any raster layers that persist across multiple artboards are all converted to instances of a smart object sharing a common resource. 
+*   **Smart Object Detached Propagation:** Automations to ensure duplicate smart objects within artboards are broken out as parallel instances with detached resource links. eg: If all artboards contain 4 instances of the same smart object, this tool will ensure that those 4 instances are detached from one another, but still maintain their individual linkage to their own singular corresponding sibling across all artboards
+*   **Asset Size and Masking Conversions:** Automations to ensure that overly large assets are resized to fit maximum necessary sizes for ad formats, and that raster masks, adjustment layers, and any other problematic layer characteristics are merged into actual asset layers in a way that Studio will not struggle to render correctly. 
+*   **Save Build Assistant Snapshots and Allow Backtracking:** Improvements to the Build Assistant that will allow users to walk back to specific points in the build process and make changes before moving forward again. 
+*   **Extended Layer Comp Capabilties:** Still in the experimental phase, but will allow creation of saved arrangements within a single artboard, allowing all "keyframes" that studio generates to flow from a single artboard. Reduces the amount of artboards needed to be created and managed, and simplifies the process of associating assets to one another across multiple animation and behavioral states.
+*   **Metadeta Embedding:** Piggybacking on the XMP metadata capabilities of the PSD format to embed additional information about the creative and the state of the document, allowing for better integration and interpretation at the Studio phase.
 
 ## Tech Stack & Architecture
 
