@@ -1,4 +1,6 @@
+import { logInitData } from '../utilities/utilities.js';
 let defaultState = {};
+import namingConventions from "../constants/namingConventions.js";
 
 export const pluginReducer = (state, action) => {
     switch (action.type) {
@@ -16,6 +18,17 @@ export const pluginReducer = (state, action) => {
                 ...state,
                 appState: 'error',
                 errorMessage: action.payload
+            };
+        case 'SET_ACTIVE_DOCUMENT':
+            return {
+                ...state,
+                diagnostics: {
+                    ...state.diagnostics,
+                    file: {
+                        fileName: action.payload.fileName,
+                        filePath: action.payload.filePath
+                    }
+                }
             };
         case 'SET_CREATIVE_CONFIG':
             return {
@@ -51,6 +64,7 @@ export const pluginReducer = (state, action) => {
                 }
             };
         case 'CLEAR_ACTIVE_FILTERS':
+            console.log('CLEAR_ACTIVE_FILTERS');
             return {
                 ...state,
                 editor: {
@@ -64,6 +78,57 @@ export const pluginReducer = (state, action) => {
                 editor: {
                     ...state.editor,
                     autoLinkEnabled: action.payload
+                }
+            };
+        case 'SET_FILTER_MODE':
+            ///what a fucking mess. this is getting taken out asap. 
+            console.log('SET_FILTER_MODE', action.payload);
+            return {
+                ...state,
+                filterMode: action.payload,
+                creativeConfig: {
+                    ...state.creativeConfig,
+                    devices: {
+                        ...state.creativeConfig.devices,
+                        desktop: {
+                            ...state.creativeConfig.devices.desktop,
+                            filter: namingConventions[action.payload].device.desktop,
+                            sequences: {
+                                ...state.creativeConfig.devices.desktop.sequences,
+                                intro: {
+                                    ...state.creativeConfig.devices.desktop.sequences.intro,
+                                    filter: namingConventions[action.payload].state.intro
+                                },
+                                expanded: {
+                                    ...state.creativeConfig.devices.desktop.sequences.expanded,
+                                    filter: namingConventions[action.payload].state.expanded
+                                },
+                                collapsed: {
+                                    ...state.creativeConfig.devices.desktop.sequences.collapsed,
+                                    filter: namingConventions[action.payload].state.collapsed
+                                }
+                            }
+                        },
+                        mobile: {
+                            ...state.creativeConfig.devices.mobile,
+                            filter: namingConventions[action.payload].device.mobile,
+                            sequences: {
+                                ...state.creativeConfig.devices.mobile.sequences,
+                                intro: {
+                                    ...state.creativeConfig.devices.mobile.sequences.intro,
+                                    filter: namingConventions[action.payload].state.intro
+                                },
+                                expanded: {
+                                    ...state.creativeConfig.devices.mobile.sequences.expanded,
+                                    filter: namingConventions[action.payload].state.expanded
+                                },
+                                collapsed: {
+                                    ...state.creativeConfig.devices.mobile.sequences.collapsed,
+                                    filter: namingConventions[action.payload].state.collapsed
+                                }
+                            }
+                        }
+                    }
                 }
             };
         case 'NEXT_BUILD_STEP':

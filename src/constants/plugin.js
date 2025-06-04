@@ -3,7 +3,8 @@ const defaultBuildStep = 0;
 
 const initialState = {
     currentSection: "editor", //"editor", "builder", "experimental", eventually..."production"
-    appState: 'unloaded', // 'unloaded', 'loading', 'loaded', 'error'
+    appState: 'unloaded', // 'unloaded', 'loading', 'loaded', 'error',
+    filterMode: 'current',
     errorMessage: '',
     creativeConfig: null, // Will store the currently loaded creative config at top level
     currentSelection: {

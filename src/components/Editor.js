@@ -201,7 +201,7 @@ function Editor() {
                         </ButtonGroup>
                     </div>
                 </div>
-                <div className="plugin-menu-section">
+                {/* <div className="plugin-menu-section">
                     <div className="plugin-control-cluster --disabled">
                         <h4 className="plugin-label" style={{ marginBottom: '0.5rem' }}>Artboard Actions --- TBD</h4>
                         <ButtonGroup>
@@ -212,7 +212,7 @@ function Editor() {
                             </ActionButton>
                         </ButtonGroup>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

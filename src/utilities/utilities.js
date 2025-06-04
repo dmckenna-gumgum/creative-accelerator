@@ -1,6 +1,7 @@
 const { storage } = require('uxp');
 const { app, action, constants, core } = require("photoshop");
 const { LayerKind } = constants;
+import { FILTER_MODE, NOT_TILE } from "../constants/constants.js"
 //////////////////////////////////////
 ////////////UTILITIES/////////////
 //////////////////////////////////////
@@ -186,13 +187,13 @@ function buildScopeRegex(scopeFilters) {
     const byType = {
         state: scopeFilters
             .filter(f => f.type === 'state')
-            .map(f => escapeRegex(f.value)),
+            .map(f => f.value),
         device: scopeFilters
             .filter(f => f.type === 'device')
-            .map(f => escapeRegex(f.value))
+            .map(f => f.value)
     };
 
-    const lookaheads = [];
+    const lookaheads = [FILTER_MODE === 'legacy' ? NOT_TILE : ''];
     if (byType.state.length) {
         lookaheads.push(`(?=.*(?:${byType.state.join('|')}))`);
     }
@@ -261,13 +262,7 @@ function mergeArraysByKey(sourceArray, payloadArray, key) {
 
 /**
  * Logs initialization data for the plugin to the console
- * @param {Object} manifest - The plugin manifest data
- * @param {Object} versions - Object containing version information (e.g., uxp version)
- * @param {Object} host - Host application information (name, version)
- * @param {Object} document - Active document information (name, path)
- * @param {string} arch - System architecture
- * @param {string} platform - Operating system platform
- * @param {string} theme - Current Photoshop theme
+ * @param {Object} state - The plugin state data
  */
 function logInitData(state) {
     const diagnostics = state.diagnostics;
@@ -286,6 +281,28 @@ function logInitData(state) {
         console.log(`User Running ${diagnostics.host.name} Version: ${diagnostics.host.version}`);
         // console.log(`Current Theme: ${capitalizeFirstLetter(theme)}`);
         console.log(`On Platform: ${diagnostics.version.os === 'win32' ? 'Windows' : 'Mac'} ${diagnostics.version.arch}`);
+        console.log('\n');
+        console.log(`%cDOCUMENT INFO`, 'font-weight: bolder; font-size: 16px;');
+        console.log(`Active Document: ${diagnostics.file.fileName}`);
+        console.log(`Active Document Path: ${diagnostics.file.filePath}`);
+        console.log('\n');
+        console.log("----------------------------------------------------------");
+        console.log("----------------------------------------------------------");
+    } catch (error) {
+        console.error('Error logging initialization data', error);
+    }
+}
+
+/**
+ * Logs initialization data for the plugin to the console
+ * @param {Object} state - The plugin state data
+ */
+function logDocumentChange(state) {
+    const diagnostics = state.diagnostics;
+    try {
+        // console.clear();
+        console.info("----------------------------------------------------------");
+        console.log("----------------------------------------------------------");
         console.log('\n');
         console.log(`%cDOCUMENT INFO`, 'font-weight: bolder; font-size: 16px;');
         console.log(`Active Document: ${diagnostics.file.fileName}`);
@@ -606,6 +623,7 @@ export {
     buildScopeRegex,
     buildArtBoardSearchRegex,
     logInitData,
+    logDocumentChange,
     replaceStep,
     mergeArraysByKey,
     findInArray,
@@ -618,5 +636,6 @@ export {
     sameIdSet,
     parsePanelName,
     addDebugListeners,
-    getAllBoardsInState
+    getAllBoardsInState,
+    escapeRegex
 };

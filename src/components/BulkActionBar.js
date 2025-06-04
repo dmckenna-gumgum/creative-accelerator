@@ -36,7 +36,7 @@ const BulkActionBar = memo(function BulkActionBar() {
                 actionBarClasses = 'selection-same-groups';
         }
     }
-
+    //REFACTOR THIS TO RELY ON STATE FOR BUTTON VISIBILITY INSTEAD OF CLASSES THAT JUST HIDE BUTTONS
     return (
         <ActionBar id="action-bar" open={isOpen} className={`plugin-action-bar ${actionBarClasses}`}>
             <p id="feedback" className="plugin-action-bar-feedback" dangerouslySetInnerHTML={{ __html: feedbackMessage }}></p>
@@ -56,7 +56,7 @@ const BulkActionBar = memo(function BulkActionBar() {
                 <sp-icon-rotate-c-w slot="icon"></sp-icon-rotate-c-w>
                 Rotate
             </ActionButton>
-            <ActionButton slot="buttons" id="btnDeleteSelected" className="action-bar-btn --layers --artboards"
+            {/* <ActionButton slot="buttons" id="btnDeleteSelected" className="action-bar-btn --layers --artboards"
                 label="Delete Selected">
                 <sp-icon-delete slot="icon"></sp-icon-delete>
                 Delete
@@ -70,7 +70,7 @@ const BulkActionBar = memo(function BulkActionBar() {
                 label="Clone Increment">
                 <sp-icon-add slot="icon"></sp-icon-add>
                 Clone Increment
-            </ActionButton>
+            </ActionButton> */}
         </ActionBar>
     );
 });

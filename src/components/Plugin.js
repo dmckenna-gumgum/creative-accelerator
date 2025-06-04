@@ -23,11 +23,12 @@ import { OverlayTrigger } from '@swc-react/overlay';
 import { DialogBase } from '@swc-react/dialog';
 
 //React
-import React, { useState, useEffect, useRef, useContext, Fragment } from "react";
+import React, { useState, useEffect, useRef, useContext, useCallback } from "react";
 
 //Local
 import { PluginContext } from '../contexts/PluginContext.js';
 import { SelectionProvider } from '../contexts/SelectionContext.js';
+import { useActiveDocumentChange } from '../hooks/useActiveDocumentChange.js';
 import Nav from './Nav.js';
 import Editor from "./Editor.js"
 import Builder from "./Builder.js";
@@ -35,7 +36,8 @@ import Production from "./Production.js";
 import Experimental from "./Experimental.js";
 import BulkActionBar from "./BulkActionBar.js";
 import { getCreativeConfig } from "../constants/creativeConfigs.js";
-import { logInitData, addDebugListeners } from '../utilities/utilities.js';
+import { logInitData, logDocumentChange, addDebugListeners } from '../utilities/utilities.js';
+import { findValidGroups } from '../helpers/helpers.js';
 
 //Photoshop Stuff
 const { versions, host, storage } = require('uxp');
@@ -44,7 +46,7 @@ const { app } = require("photoshop");
 const eventDebug = false;
 let initlogged = false;
 
-function getManifestOnLoad(dispatch) {
+function getManifestOnLoad(dispatch, currentPhotoshopDocument) {
     useEffect(() => {
         const fetchInitialData = async () => {
             dispatch({ type: 'FETCH_DATA_START' });
@@ -76,8 +78,8 @@ function getManifestOnLoad(dispatch) {
                                 arch: currentArch
                             },
                             file: {
-                                fileName: app.activeDocument.name,
-                                filePath: app.activeDocument.path,
+                                fileName: currentPhotoshopDocument ? currentPhotoshopDocument.name : null,
+                                filePath: currentPhotoshopDocument ? currentPhotoshopDocument.path : null,
                             }
                         }
                     }
@@ -98,7 +100,62 @@ function Plugin() {
     const { state, dispatch } = useContext(PluginContext);
     const creativeConfig = getCreativeConfig('velocity');
     const initialized = useRef(false);
-    getManifestOnLoad(dispatch);
+
+    const currentPhotoshopDocument = useActiveDocumentChange();
+
+    useEffect(() => {
+        if (!initialized.current) return;
+        const newDocName = currentPhotoshopDocument?.name || null;
+        const newDocPath = currentPhotoshopDocument?.path || null;
+
+        const storedDocName = state.diagnostics?.file?.fileName;
+        const storedDocPath = state.diagnostics?.file?.filePath;
+
+        let determinedFilterMode = 'current'; // Default to current
+        const legacyPattern = /morph-[4-6]/;
+        const matchingArtboards = findValidGroups(app.activeDocument.layers, null, legacyPattern);
+        if (matchingArtboards && matchingArtboards.length > 0) {
+            determinedFilterMode = 'legacy';
+        } else {
+            determinedFilterMode = 'current';
+        }
+        ///i need to do somethign with this eventually if i want filters to change dynamically based on the 
+        //version of velocity we're working with but fuck that noise right now. 
+
+
+        // Compare with the document info currently in the global state
+        if (newDocName !== storedDocName || newDocPath !== storedDocPath) {
+            console.log(`Plugin: Document context updating. Previous: ${storedDocName || 'none'}, New: ${newDocName || 'none'}`);
+            dispatch({
+                type: 'SET_ACTIVE_DOCUMENT',
+                payload: {
+                    fileName: newDocName,
+                    filePath: newDocPath,
+                }
+            });
+            dispatch({
+                type: 'SET_FILTER_MODE',
+                payload: determinedFilterMode
+            });
+            dispatch({
+                type: 'CLEAR_ACTIVE_FILTERS',
+                payload: null
+            });
+            console.log('updated state', state);
+            // Eventually this is where we'll check what sort of file 
+            // (eg: Hang Time vs Velocity) we're working with and adjust the UI accordingly
+        }
+    }, [currentPhotoshopDocument, dispatch, state.diagnostics?.file?.fileName, state.diagnostics?.file?.filePath]);
+
+    useEffect(() => {
+        // Only log if initialized and if there's actual document info to log.
+        // This prevents logging when the plugin first loads with no document or during initial state setup.
+        if (initialized.current && (state.diagnostics?.file?.fileName || state.diagnostics?.file?.filePath)) {
+            logDocumentChange(state);
+        }
+    }, [state.diagnostics?.file?.fileName, state.diagnostics?.file?.filePath]);
+
+    getManifestOnLoad(dispatch, currentPhotoshopDocument);
 
     const onAppInit = (state, isLoaded) => {
         useEffect(() => {

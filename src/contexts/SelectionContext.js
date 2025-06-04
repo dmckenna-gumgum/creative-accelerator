@@ -1,7 +1,7 @@
 // src/contexts/SelectionContext.js
 import React, { createContext, useContext, useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { PluginContext } from './PluginContext.js';
-import { initialState } from '../constants/plugin.js'; // Import the initial state
+import { initialState } from '../constants/plugin.js';
 import { sameIdSet, getSelectionViability, parentGroupCount } from '../utilities/utilities.js';
 const { app, action } = require("photoshop");
 
@@ -48,6 +48,7 @@ export function SelectionProvider({ children }) {
     }, []);
 
     const processSelection = useCallback(async (layers) => {
+        console.log('(SelectionContext) Processing selection:', layers.length);
         const prev = selectionRef.current;
         //i'm trying to do this in a way where I understand if it's not-identical through easier comparisons first, and then harder comparisons if it
         //passes the easier checks. sameIdSet is somewhat expensive, so I don't want to run it unless I have to.
@@ -84,8 +85,13 @@ export function SelectionProvider({ children }) {
     }, [state.currentSelection]);
 
     const forceSelectionCheck = useCallback(async () => {
+        console.log('(SelectionContext) Forcing selection check');
         try {
             const layers = app.activeDocument?.activeLayers || [];
+            if (layers.length === 0) {
+                setNoSelection();
+                return;
+            }
             await processSelection(layers);
         } catch (error) {
             console.error("Error during forced selection check:", error);
@@ -120,6 +126,10 @@ export function SelectionProvider({ children }) {
         stopSelectionPolling();
         try {
             const layers = app.activeDocument.activeLayers;
+            if (layers.length === 0) {
+                setNoSelection();
+                return;
+            }
             console.log('(SelectionContext) Selection changed:', layers.length);
             await processSelection(layers);
         } catch (error) {

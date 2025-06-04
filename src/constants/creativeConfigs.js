@@ -1,3 +1,6 @@
+import namingConventions from "./namingConventions.js";
+import { FILTER_MODE } from "./constants.js"
+
 const creativeConfigs = [
   {
     name: 'velocity',
@@ -5,7 +8,7 @@ const creativeConfigs = [
       desktop: {
         device: 'desktop',
         abbreviation: ':dt',
-        filter: ':dt',
+        filter: namingConventions[FILTER_MODE].device.desktop,
         dimensions: {
           height: 450,
           width: 1920
@@ -25,7 +28,7 @@ const creativeConfigs = [
             device: 'desktop',
             name: 'expanded',
             abbreviation: ':dt',
-            filter: "-expanded",
+            filter: namingConventions[FILTER_MODE].state.expanded,
             artboards: [],
             maxSteps: 3,
             artboardNamePattern: 'morph-${step}-expanded-panel:dt',
@@ -34,7 +37,7 @@ const creativeConfigs = [
             device: 'desktop',
             name: 'collapsed',
             abbreviation: ':dt',
-            filter: "-collapsed",
+            filter: namingConventions[FILTER_MODE].state.collapsed,
             artboards: [],
             maxSteps: 3,
             artboardNamePattern: 'morph-${step}-collapsed-panel:dt',
@@ -44,7 +47,7 @@ const creativeConfigs = [
       mobile: {
         device: 'mobile',
         abbreviation: ':mb',
-        filter: ':mb',
+        filter: namingConventions[FILTER_MODE].device.mobile,
         dimensions: {
           height: 450,
           width: 860
@@ -54,7 +57,7 @@ const creativeConfigs = [
             device: 'mobile',
             name: 'intro',
             abbreviation: ':mb',
-            filter: "intro-",
+            filter: namingConventions[FILTER_MODE].state.intro,
             artboards: [],
             maxSteps: 100,
             artboardNamePattern: 'intro-${step}-panel:mb',
@@ -63,7 +66,7 @@ const creativeConfigs = [
             device: 'mobile',
             name: 'expanded',
             abbreviation: ':mb',
-            filter: "-expanded",
+            filter: namingConventions[FILTER_MODE].state.expanded,
             artboards: [],
             maxSteps: 3,
             artboardNamePattern: 'morph-${step}-expanded-panel:mb',
@@ -72,7 +75,7 @@ const creativeConfigs = [
             device: 'mobile',
             name: 'collapsed',
             abbreviation: ':mb',
-            filter: "-collapsed",
+            filter: namingConventions[FILTER_MODE].state.collapsed,
             artboards: [],
             maxSteps: 3,
             artboardNamePattern: 'morph-${step}-collapsed-panel:mb',

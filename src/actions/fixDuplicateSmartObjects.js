@@ -102,7 +102,7 @@ async function _detachAndReplicateSmartObject(originalSoData, index, baseName) {
 
         // Ensure new layer has the original name if `placedLayerMakeCopy` changed it (e.g., added "copy")
         if (newLayer.name !== originalSoData.name) {
-            newLayer.name = `${baseName} || Orphan: ${newLayer.id}`;//${index}`;
+            newLayer.name = `${baseName} || Instance: ${index}`;
         }
 
         // 4. Delete the original layer
@@ -123,7 +123,6 @@ async function _detachAndReplicateSmartObject(originalSoData, index, baseName) {
             parent: newLayer.parent,
             layer: newLayer,
             transform: originalSoData.transform
-            // newLayerTransform: newLayer.transform // If needed for verification
         };
         console.log('result', result);
         return result;
@@ -263,7 +262,7 @@ export default async function fixDuplicateSmartObjects(selectedLayers, filterReg
             // Keep the first one, detach the rest
             const masterSO = soArray[0]; // This one is kept as is, or could also be detached if we want all new
             masterSO.baseName = masterSO.name.replace(/\s+copy\s+\d+\s*$/i, "");
-            masterSOId = masterSO.name = masterSO.layerRef.name = `${masterSO.baseName} || Orphan: ${masterSO.id}`;
+            masterSOId = masterSO.name = masterSO.layerRef.name = `${masterSO.baseName} || Orphan: 0`;
             console.log(`  Keeping master: ${masterSO.name} (ID: ${masterSO.id})`);
             for (let i = 1; i < soArray.length; i++) {
                 const soToDetach = soArray[i];
