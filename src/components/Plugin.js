@@ -43,7 +43,7 @@ import { findValidGroups } from '../helpers/helpers.js';
 const { versions, host, storage } = require('uxp');
 const { arch, platform } = require('os');
 const { app } = require("photoshop");
-const eventDebug = false;
+const eventDebug = true;
 let initlogged = false;
 
 function getManifestOnLoad(dispatch, currentPhotoshopDocument) {

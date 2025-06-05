@@ -3,8 +3,12 @@ import React, { createContext, useContext, useEffect, useRef, useCallback, useMe
 import { PluginContext } from './PluginContext.js';
 import { initialState } from '../constants/plugin.js';
 import { sameIdSet, getSelectionViability, parentGroupCount } from '../utilities/utilities.js';
-const { app, action } = require("photoshop");
+const { app, action, core } = require("photoshop");
 
+//NOTE: POLLING WAS ORIGINALLY MEANT TO CATCH DESELECTS BUT I FOUND AN EVENT LISTENER TO CATCH THOSE, 
+// THAT SAID I'M STILL KEEPING IT FOR NOW, BECAUSE WHEN IT RELOADS IN DEVELOPMENT AND I TRIGGER AN UNDO, 
+// IT HELPS CATCH SELECTION CHANGES THAT WOULD NOT BE DETECTED AS PART OF A DECREMENT IN THE HISTORY. 
+// EVENTUALLY I SHOULD PROBABLY ADD UNDO AS A POTENTIAL TRIGGER EVENT FOR A SELECTION CHANGE INSPECTION.
 // Initial state for selection
 const initialSelectionState = initialState.currentSelection ?? {
     layers: [],
@@ -121,6 +125,7 @@ export function SelectionProvider({ children }) {
 
     // Handler for selection changes
     const handleSelectionChange = async () => {
+        console.log('selection change');
         stopSelectionPolling();
         try {
             const layers = app.activeDocument.activeLayers;
@@ -134,6 +139,12 @@ export function SelectionProvider({ children }) {
         }
     }
 
+    const handleDeselect = async (event) => {
+        console.log('deselect', event);
+        setNoSelection();
+    }
+
+
     useEffect(() => {
         if (state.currentSection !== 'editor') {
             // console.log('(SelectionContext) Not in editor section, skipping selection setup');
@@ -145,6 +156,12 @@ export function SelectionProvider({ children }) {
             [{ event: "select" }],
             handleSelectionChange
         );
+
+        const deselectListener = action.addNotificationListener(
+            [{ event: "selectNoLayers" }],
+            handleDeselect
+        );
+
         if (app.activeDocument && app.activeDocument.activeLayers.length > 0) {
             //run an initial handle if there is a selection already when the plugin loads.
             handleSelectionChange();
@@ -160,6 +177,7 @@ export function SelectionProvider({ children }) {
         (newSelection) =>
             dispatch({ type: 'SET_SELECTION', payload: newSelection }),
         [dispatch]
+
     );
     // 2. memoise the whole context value;
     const contextValue = useMemo(
