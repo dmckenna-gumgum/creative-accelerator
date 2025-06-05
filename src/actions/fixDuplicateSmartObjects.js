@@ -127,6 +127,8 @@ async function _detachAndReplicateSmartObject(originalSoData, index, baseName) {
  * @param {object} targetGroupLayer - The actual layer object for the target group.
  * @returns {Promise<object|null>} Info about the new layer, or null on failure.
  * This is pretty messy right now but i don't have any ambition to clean it up. 
+ * There's also a bug in here that sometimes causes detached isntances to inherit the wrong transform props.
+ * Still trying to figure out how to replicate it reliably. 
  */
 async function _replaceSmartObjectInTarget(targetSoData, mappingEntry, targetGroupLayer) {
 
@@ -164,7 +166,7 @@ async function _replaceSmartObjectInTarget(targetSoData, mappingEntry, targetGro
                     freeTransformCenterState: { _enum: 'quadCenterState', _value: 'QCSAverage' },
                     width: { _unit: 'percentUnit', _value: targetSoData.transform.widthPct / mappingEntry.transform.widthPct * 100 },
                     height: { _unit: 'percentUnit', _value: targetSoData.transform.heightPct / mappingEntry.transform.heightPct * 100 },
-                    angle: { _unit: 'angleUnit', _value: targetSoData.transform.rotationDeg },
+                    angle: { _unit: 'angleUnit', _value: targetSoData.transform.rotationDeg - mappingEntry.transform.rotationDeg },
                     interfaceIconFrameDimmed: { _enum: 'interpolationType', _value: 'bicubicAutomatic' },
                     _options: { dialogOptions: 'dontDisplay' }
                 }
