@@ -166,6 +166,7 @@ async function _replaceSmartObjectInTarget(targetSoData, mappingEntry, targetGro
                     freeTransformCenterState: { _enum: 'quadCenterState', _value: 'QCSAverage' },
                     width: { _unit: 'percentUnit', _value: targetSoData.transform.widthPct / mappingEntry.transform.widthPct * 100 },
                     height: { _unit: 'percentUnit', _value: targetSoData.transform.heightPct / mappingEntry.transform.heightPct * 100 },
+                    //this needs to counteract whatever rotational angle it inherited from the source. i had a stroke thinking about this.
                     angle: { _unit: 'angleUnit', _value: targetSoData.transform.rotationDeg - mappingEntry.transform.rotationDeg },
                     interfaceIconFrameDimmed: { _enum: 'interpolationType', _value: 'bicubicAutomatic' },
                     _options: { dialogOptions: 'dontDisplay' }
@@ -267,33 +268,33 @@ function setMasterObjectProps(masterSmartObject) {
 async function fixInitialGroup(clusters) {
     const groupedByPreviouslySharedResource = new Map();
     for (const [resourceID, siblingArray] of clusters.entries()) {
-        if (siblingArray.length > 1) {
-            groupedByPreviouslySharedResource.set(resourceID, []);
+        // if (siblingArray.length > 1) {
+        groupedByPreviouslySharedResource.set(resourceID, []);
 
-            // console.log(`Processing resource:`, soArray);
-            //Considering refactoring this to just detach the masters too. It really shouldn't matter to the user and the extra complexity
-            //involved in not doing it makes this whole thing require extra steps and functions to ensure there aren't bugs....TBD
-            const masterSmartObject = siblingArray[0]; // This one is kept as is, or could also be detached if we want all new
-            masterSmartObject.baseName = masterSmartObject.name.replace(/\s+copy\s+\d+\s*$/i, "");
-            masterSmartObject.name = masterSmartObject.layerRef.name = `${masterSmartObject.baseName} || Instance: 0`;
-            console.log('masterSmartObject', masterSmartObject);
-            const fixedMasterObject = setMasterObjectProps(masterSmartObject);
-            groupedByPreviouslySharedResource.get(resourceID).push(fixedMasterObject);
-            // console.log(`  Keeping master: ${masterSmartObject.name} (ID: ${masterSmartObject.id})`);
-            for (let i = 1; i < siblingArray.length; i++) {
-                const toDetach = siblingArray[i];
-                const newSoInfo = await _detachAndReplicateSmartObject(toDetach, i, masterSmartObject.baseName);
-                if (newSoInfo) {
-                    groupedByPreviouslySharedResource.get(resourceID).push(newSoInfo);
-                } else {
-                    console.warn(`Failed to detach ${toDetach.name}. It might still be linked or an error occurred.`);
-                    // Potentially return a partial success or error here
-                }
+        // console.log(`Processing resource:`, soArray);
+        //Considering refactoring this to just detach the masters too. It really shouldn't matter to the user and the extra complexity
+        //involved in not doing it makes this whole thing require extra steps and functions to ensure there aren't bugs....TBD
+        const masterSmartObject = siblingArray[0]; // This one is kept as is, or could also be detached if we want all new
+        masterSmartObject.baseName = masterSmartObject.name.replace(/\s+copy\s+\d+\s*$/i, "");
+        masterSmartObject.name = masterSmartObject.layerRef.name = `${masterSmartObject.baseName} || Instance: 0`;
+        console.log('masterSmartObject', masterSmartObject);
+        const fixedMasterObject = setMasterObjectProps(masterSmartObject);
+        groupedByPreviouslySharedResource.get(resourceID).push(fixedMasterObject);
+        // console.log(`  Keeping master: ${masterSmartObject.name} (ID: ${masterSmartObject.id})`);
+        for (let i = 1; i < siblingArray.length; i++) {
+            const toDetach = siblingArray[i];
+            const newSoInfo = await _detachAndReplicateSmartObject(toDetach, i, masterSmartObject.baseName);
+            if (newSoInfo) {
+                groupedByPreviouslySharedResource.get(resourceID).push(newSoInfo);
+            } else {
+                console.warn(`Failed to detach ${toDetach.name}. It might still be linked or an error occurred.`);
+                // Potentially return a partial success or error here
             }
-
-
         }
+
+
     }
+    //}
     return groupedByPreviouslySharedResource;
 }
 
@@ -377,6 +378,7 @@ async function fixSmartObjectsFromReferenceCluster(smartObjectsToFix, fixedClust
             }
         }
     }
+    return fixedCluster;
 }
 
 
