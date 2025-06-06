@@ -14,6 +14,7 @@ import { useDialog, useTransformDialog } from '../hooks/useDialog.js';
 import { getKitchenSink } from '../actions/getKitchenSink.js';
 import { captureArtboardState, restoreArtboardState } from '../actions/captureArtboardState.js';
 import fixDuplicateSmartObjects from '../actions/fixDuplicateSmartObjects.js';
+import fixInvalidLayers from '../actions/fixInvalidLayers.js';
 
 export function usePhotoshopActions() {
     const selection = useSelection();
@@ -109,6 +110,16 @@ export function usePhotoshopActions() {
         console.log("(handleFixDuplicateSmartObjects) Artboard state:", selection.layers);
         const result = await executeModalAction("Fix Duplicate Smart Objects", async (context) => {
             return await fixDuplicateSmartObjects(selection.layers, filterRegex);
+        });
+        return result;
+    }, [selection]);
+
+    const handleFixInvalidLayers = useCallback(async (context) => {
+        const filterRegex = await getFilterRegex();
+        console.log('filter regex', filterRegex);
+        console.log("(handleFixInvalidLayers) Artboard state:", selection.layers);
+        const result = await executeModalAction("Fix Invalid Layers", async (context) => {
+            return await fixInvalidLayers(selection.layers, filterRegex);
         });
         return result;
     }, [selection]);
@@ -219,5 +230,6 @@ export function usePhotoshopActions() {
         restoreArtboardState: handleRestoreArtboardState,
         selectAllLayers: handleSelectAllLayers,
         fixDuplicateSmartObjects: handleFixDuplicateSmartObjects,
+        fixInvalidLayers: handleFixInvalidLayers,
     };
 }

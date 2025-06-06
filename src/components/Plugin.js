@@ -17,6 +17,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-device-phone.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-device-desktop.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-beaker.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow500.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-find-and-replace.js';
 import { Theme } from '@swc-react/theme';
 import { ButtonGroup } from '@swc-react/button-group';
 import { OverlayTrigger } from '@swc-react/overlay';

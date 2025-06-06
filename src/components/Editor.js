@@ -16,7 +16,7 @@ function Editor() {
     const { creativeConfig } = state;
     const { activeFilters, autoLinkEnabled } = state.editor;
     const { toggleAutoLink, processSelectionChange } = useAutoLink();
-    const { selectLayersByName, propagateAsset, propagateMissing, matchStylesByName, selectAllLayers, fixDuplicateSmartObjects } = usePhotoshopActions();
+    const { selectLayersByName, propagateAsset, propagateMissing, matchStylesByName, selectAllLayers, fixDuplicateSmartObjects, fixInvalidLayers } = usePhotoshopActions();
     // console.log('editor using current selection', currentSelection);
 
     useEffect(() => {
@@ -197,6 +197,11 @@ function Editor() {
                                 id="btnFixDuplicate" onClick={fixDuplicateSmartObjects}>
                                 <sp-icon-wrench slot="icon"></sp-icon-wrench>
                                 Fix Duplicate Smart Objects
+                            </ActionButton>
+                            <ActionButton emphasized static="secondary" treatment="outline"
+                                id="btnFixInvalid" onClick={fixInvalidLayers}>
+                                <sp-icon-find-and-replace slot="icon"></sp-icon-find-and-replace>
+                                Fix Invalid Layers
                             </ActionButton>
                         </ButtonGroup>
                     </div>
