@@ -18,6 +18,12 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-device-desktop.js'
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-beaker.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow500.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-find-and-replace.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-branch3.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-workflow.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-all-layers.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-double-right.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-up.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
 import { Theme } from '@swc-react/theme';
 import { ButtonGroup } from '@swc-react/button-group';
 import { OverlayTrigger } from '@swc-react/overlay';
@@ -44,7 +50,7 @@ import { findValidGroups } from '../helpers/helpers.js';
 const { versions, host, storage } = require('uxp');
 const { arch, platform } = require('os');
 const { app } = require("photoshop");
-const eventDebug = true;
+const eventDebug = false;
 let initlogged = false;
 
 function getManifestOnLoad(dispatch, currentPhotoshopDocument) {

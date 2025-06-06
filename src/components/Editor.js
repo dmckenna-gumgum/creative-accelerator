@@ -61,11 +61,26 @@ function Editor() {
                 data-filter={value}
                 onClick={() => handleFilterToggle(type, key, value, isActive)}
             >
-                {(type === 'device' && (key === 'desktop' ?
+                {/* {(type === 'device' && (key === 'desktop' ?
                     <sp-icon-device-desktop slot="icon" size="s"></sp-icon-device-desktop> :
                     <sp-icon-device-phone slot="icon" size="s"></sp-icon-device-phone>
-                ))}
-
+                ))} */}
+                {(() => {
+                    switch (key) {
+                        case 'expanded':
+                            return <sp-icon-chevron-up slot="icon" size="s"></sp-icon-chevron-up>;
+                        case 'collapsed':
+                            return <sp-icon-chevron-down slot="icon" size="s"></sp-icon-chevron-down>;
+                        case 'intro':
+                            return <sp-icon-chevron-double-right slot="icon" size="s"></sp-icon-chevron-double-right>;
+                        case 'desktop':
+                            return <sp-icon-device-desktop slot="icon" size="s"></sp-icon-device-desktop>;
+                        case 'mobile':
+                            return <sp-icon-device-phone slot="icon" size="s"></sp-icon-device-phone>;
+                        default:
+                            return null;
+                    }
+                })()}
                 {key.charAt(0).toUpperCase() + key.slice(1)}
             </Tag>
         )
@@ -160,11 +175,11 @@ function Editor() {
                             </ActionButton>
                             <ActionButton emphasized static="secondary" treatment="outline" id="btnSelect" onClick={selectLayersByName}>
                                 <sp-icon-layers slot="icon"></sp-icon-layers>
-                                Select Layers by Name
+                                Select Sibling Layers
                             </ActionButton>
                             <ActionButton emphasized static="secondary" treatment="outline"
                                 id="btnSelectAll" onClick={selectAllLayers}>
-                                <sp-icon-layers slot="icon"></sp-icon-layers>
+                                <sp-icon-show-all-layers slot="icon"></sp-icon-show-all-layers>
                                 Select All Layers
                             </ActionButton>
                         </ButtonGroup>
@@ -176,7 +191,7 @@ function Editor() {
                         <ButtonGroup>
                             <ActionButton emphasized static="secondary" treatment="outline" onClick={propagateAsset}
                                 id="btnDuplicate">
-                                <sp-icon-duplicate slot="icon"></sp-icon-duplicate>
+                                <sp-icon-workflow slot="icon"></sp-icon-workflow>
                                 Propagate Asset(s)
                             </ActionButton>
                             <ActionButton emphasized static="secondary" treatment="outline" id="btnMissing" onClick={propagateMissing}>
@@ -185,7 +200,7 @@ function Editor() {
                             </ActionButton>
                             <ActionButton emphasized static="secondary" treatment="outline" onClick={matchStylesByName}
                                 id="btnMatchStyle">
-                                <sp-icon-wrench slot="icon"></sp-icon-wrench>
+                                <sp-icon-duplicate slot="icon"></sp-icon-duplicate>
                                 Match Styles By Name
                             </ActionButton>
                             {/* <ActionButton emphasized static="secondary" treatment="outline" id="btnFixSmart"
@@ -195,7 +210,7 @@ function Editor() {
                             </ActionButton> */}
                             <ActionButton emphasized static="secondary" treatment="outline"
                                 id="btnFixDuplicate" onClick={fixDuplicateSmartObjects}>
-                                <sp-icon-wrench slot="icon"></sp-icon-wrench>
+                                <sp-icon-branch3 slot="icon"></sp-icon-branch3>
                                 Fix Duplicate Smart Objects
                             </ActionButton>
                             <ActionButton emphasized static="secondary" treatment="outline"

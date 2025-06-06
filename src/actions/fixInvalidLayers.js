@@ -147,24 +147,12 @@ async function convertToSmartObjectAtom(layerData) {
 async function replaceLayerWithSOInstance(targetLayerData, masterSOData) {
     try {
         // 1. Duplicate the master SO (creates an instance)
-        // const tempVisibility = masterSOData.layerRef.visible;
-        // if (!tempVisibility) await masterSOData.layerRef.setVisible(true); // Must be visible to duplicate reliably
-
         const duplicatedInstanceRef = await masterSOData.layerRef.duplicate();
-        // if (!tempVisibility) {
-        //     await masterSOData.layerRef.setVisible(false);
-        //     await duplicatedInstanceRef.setVisible(false); // Match master's original visibility if it was hidden
-        // }
-        // if (!targetLayerData.visible) await duplicatedInstanceRef.setVisible(false); // Match target's visibility
-        // else await duplicatedInstanceRef.setVisible(true);
-
-        // 2. Move the new instance to the target layer's group and position
-        // Move it near the target layer first, then delete target, then re-evaluate index if needed.
         console.log('inserting inside of: ', targetLayerData.layerRef.parent);
         await duplicatedInstanceRef.move(targetLayerData.layerRef.parent, ElementPlacement.PLACEINSIDE);
         await duplicatedInstanceRef.move(targetLayerData.layerRef, ElementPlacement.PLACEBEFORE);
 
-        // 3. Adjust transform (size and position) to match targetLayerData
+        // 2. Adjust transform (size and position) to match targetLayerData
         const targetBounds = targetLayerData.bounds;
         const targetWidth = targetBounds.right - targetBounds.left;
         const targetHeight = targetBounds.bottom - targetBounds.top;
@@ -232,7 +220,9 @@ async function convertAndReplaceInstances(masterPlan) {
 
     for (const [name, planData] of masterPlan.entries()) {
         const { masterLayerData, clusterMembers } = planData;
-
+        //this won't work on any layers that don't have more than one instance.
+        //it should still convert those, but not expect there to be a master/child relationship for them
+        //will look at this tomorrow. 
         console.log(`Processing cluster: "${name}". Master layer ID: ${masterLayerData.id}`);
         const masterSO = await convertToSmartObjectAtom(masterLayerData);
         console.log('masterSO: ', masterSO);
